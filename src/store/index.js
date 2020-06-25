@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import XLSX from 'xlsx'
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 Vue.use(Vuex)
 
@@ -11,13 +13,8 @@ export default new Vuex.Store({
 
   },
   getters:{
-    excelData(state){
-      return state.excelData
-    },
-    imgId(state){
-      return state.imgId
-    },
-
+    excelData : state => state.excelData,
+    imgId :state => state.imgId,
   },
   mutations: {
     setExcelData(state, data){
@@ -45,10 +42,68 @@ export default new Vuex.Store({
             return row.id=idx
           })
           context.commit('setExcelData', rows)
-          console.log(context.state.excelData)
-          console.log(JSON.stringify(rows));
       }
       reader.readAsArrayBuffer(file)
+    },
+    async saveTestFile(){
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const printArea = document.getElementById("cardundefined");
+
+      try{
+        const canvas = await html2canvas(printArea)
+        const dataURL = canvas.toDataURL();
+        pdf.addImage(dataURL, 'JPEG', 5,5);
+        pdf.addImage(dataURL, 'JPEG', 105,5); 
+        pdf.addImage(dataURL, 'JPEG', 5,155);
+        pdf.addImage(dataURL, 'JPEG', 105, 155); 
+      } catch(err){
+        console.error(err)
+      }
+      pdf.save('saved.pdf');
+    },
+    async savePdf({state}) {
+      if (state.excelData.length==0) {
+          alert("엑셀 파일을 넣어주세요")
+      }else{
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        
+        for(let i=0; i<state.excelData.length; i++){
+            const printArea = document.getElementById("card"+i.toString());
+            
+            console.log(document.getElementById("card"+i.toString()).width)
+            try{
+              // const pixel = 3.77
+              
+              const canvas = await html2canvas(printArea, {scale:0.5,})
+
+              const dataURL = canvas.toDataURL();
+              switch(i%4){
+                  case 0:
+                      pdf.addImage(dataURL, 'JPEG', 5,5); 
+                      break;
+                  case 1:
+                      pdf.addImage(dataURL, 'JPEG', 105,5); 
+                      break;
+                  case 2:
+                      pdf.addImage(dataURL, 'JPEG', 5,155); 
+                      break;
+                  case 3:
+                      pdf.addImage(dataURL, 'JPEG', 105, 155); 
+                      if(i+1 !== state.excelData.length){
+                          pdf.addPage();
+                      }
+                      break;
+                  default:
+                      break;    
+              }
+            }catch (err) {
+              console.error(err)
+            }
+            
+        }
+        pdf.save('saved.pdf');
+        
+      }
     },
   },
   modules: {

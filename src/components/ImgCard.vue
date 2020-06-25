@@ -1,6 +1,7 @@
 <template>
-    <v-card  outlined >
-        <v-img :src="path" contain :ref="`card${tagData.id}`">
+    <v-card  outlined width="500">
+        {{tagData.id}}
+        <v-img :src="path" contain :id="`card${tagData.id}`" class="imageCard">
             <div class="tag" id="affiliationTag">
                 {{tagData.소속}}
             </div>
@@ -34,24 +35,23 @@ export default {
 </script>
 
 <style> 
-    .printDiv{
-        width:500px;
-        margin:auto;
+    #affiliationTag{
+        font-size: 25px;
+        top:40%
+
     }
     #nameTag{
-        font-size:50px;
+        font-size: 40px;
         top:50%
-        /* text-align:center; */
     }
 
-    #affiliationTag{
-        font-size:25px;
-        top:40%
+    .imageCard{
+        position: relative;
     }
-    
+
     .tag{
-        position:absolute;
-        
+        position: absolute;
+
         left:50%;
         transform:translate(-50%);
     }
