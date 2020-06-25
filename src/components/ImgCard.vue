@@ -20,13 +20,10 @@ export default {
             path:''
         }
     },
-    computed: mapGetters(['getImgId']),
-    
-    created(){
-        console.log("getImg", this.getImgId)
-        this.path = require(`@/img/${this.getImgId}.jpg`)
-        console.log("path:", this.path)
+    computed: mapGetters(['imgId']),
 
+    created(){
+        this.path = require(`@/img/${this.imgId}.jpg`)
     }
 }
 </script>

@@ -11,7 +11,10 @@ export default new Vuex.Store({
 
   },
   getters:{
-    getImgId(state){
+    excelData(state){
+      return state.excelData
+    },
+    imgId(state){
       return state.imgId
     },
 
