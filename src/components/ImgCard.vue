@@ -1,13 +1,15 @@
 <template>
-    <v-card style="margin-top:100px" id="imgCard" outlined >
-        <img :src="path" contain max-height="700" id='nameCard'>
-        <div class="tag" id="affiliationTag">
-            열린문교회
-        </div>
-        <div class="tag" id="nameTag">
-            나상문
-        </div> 
-    </v-card> 
+    <v-card  outlined >
+        <v-img :src="path" contain :ref="`card${tagData.id}`">
+            <div class="tag" id="affiliationTag">
+                {{tagData.소속}}
+            </div>
+            <div class="tag" id="nameTag">
+                {{tagData.이름}}
+            </div> 
+        </v-img>
+            
+    </v-card>
 </template>
 
 <script>
@@ -20,6 +22,9 @@ export default {
             path:''
         }
     },
+    props:{
+        tagData: Object,
+    },
     computed: mapGetters(['imgId']),
 
     created(){
@@ -28,6 +33,27 @@ export default {
 }
 </script>
 
-<style>
+<style> 
+    .printDiv{
+        width:500px;
+        margin:auto;
+    }
+    #nameTag{
+        font-size:50px;
+        top:50%
+        /* text-align:center; */
+    }
+
+    #affiliationTag{
+        font-size:25px;
+        top:40%
+    }
+    
+    .tag{
+        position:absolute;
+        
+        left:50%;
+        transform:translate(-50%);
+    }
 
 </style>

@@ -41,8 +41,11 @@ export default new Vuex.Store({
 
           let excelFile = XLSX.read(data, {type:"array"})
           let rows = XLSX.utils.sheet_to_json(excelFile.Sheets['Sheet1']);
+          rows.map((row,idx)=>{
+            return row.id=idx
+          })
           context.commit('setExcelData', rows)
-          
+          console.log(context.state.excelData)
           console.log(JSON.stringify(rows));
       }
       reader.readAsArrayBuffer(file)
