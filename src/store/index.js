@@ -10,22 +10,26 @@ export default new Vuex.Store({
   state: {
     excelData:'',
     imgId:'',
+    saveWidth:0,
+    saveHeigh:0,
 
   },
   getters:{
     excelData : state => state.excelData,
     imgId :state => state.imgId,
+    saveWidth : state => state.saveWidth,
+    saveHeight : state => state.saveHeigh,
   },
   mutations: {
-    setExcelData(state, data){
-      state.excelData = data
-    },
-    setImgId(state, data){
-      state.imgId = data
-    }
+    setExcelData : (state, data) => state.excelData = data,
+
+    setImgId :(state, data) => state.imgId = data,
+
+    setSaveWidth : (state, data) => state.saveWidth = data,
+    setSaveHeigh : (state, data) => state.saveHeigh = data
   },
   actions: {
-    readFile(context, event) { 
+    readFile({commit}, event) { 
       const file = event.target.files[0]
       // const fileName = file.name
 
@@ -41,16 +45,25 @@ export default new Vuex.Store({
           rows.map((row,idx)=>{
             return row.id=idx
           })
-          context.commit('setExcelData', rows)
+          commit('setExcelData', rows)
       }
       reader.readAsArrayBuffer(file)
     },
     async saveTestFile(){
       const pdf = new jsPDF('p', 'mm', 'a4');
       const printArea = document.getElementById("cardundefined");
+      const printAreaImg = document.getElementById("imgCardundefined");
+
+      console.log(printArea.offsetWidth)
+      console.log(printArea.offsetHeight)
+      printAreaImg.style.width= `${3.77 * 100}px`
+      printAreaImg.style.height= `${3.77 * 150}px`
+      
+      console.log(printArea.offsetWidth)
+      console.log(printArea.offsetHeight)
 
       try{
-        const canvas = await html2canvas(printArea)
+        const canvas = await html2canvas(printArea )
         const dataURL = canvas.toDataURL();
         pdf.addImage(dataURL, 'JPEG', 5,5);
         pdf.addImage(dataURL, 'JPEG', 105,5); 
@@ -69,12 +82,16 @@ export default new Vuex.Store({
         
         for(let i=0; i<state.excelData.length; i++){
             const printArea = document.getElementById("card"+i.toString());
+            const printAreaImg = document.getElementById("imgCard"+i.toString());
+
+            printAreaImg.style.width= `${3.77 * 100}px`
+            printAreaImg.style.height= `${3.77 * 150}px`
             
-            console.log(document.getElementById("card"+i.toString()).width)
+            console.log(printArea.offsetWidth)
             try{
               // const pixel = 3.77
               
-              const canvas = await html2canvas(printArea, {scale:0.5,})
+              const canvas = await html2canvas(printArea)
 
               const dataURL = canvas.toDataURL();
               switch(i%4){

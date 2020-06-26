@@ -1,15 +1,23 @@
 <template>
-    <v-card  outlined width="500">
+    <v-card  outlined >
         {{tagData.id}}
-        <v-img :src="path" contain :id="`card${tagData.id}`" class="imageCard">
+        <!-- <v-img :src="path" :id="`card${tagData.id}`" width="500" class="imageCard">
             <div class="tag" id="affiliationTag">
                 {{tagData.소속}}
             </div>
             <div class="tag" id="nameTag">
                 {{tagData.이름}}
             </div> 
-        </v-img>
-            
+        </v-img> -->
+        <div :id="`card${tagData.id}`" style="border: 0.7px ridge;">
+            <img :src="path" :id="`imgCard${tagData.id}`" width="500" class="imageCard">
+            <div class="tag" id="affiliationTag">
+                {{tagData.소속}}
+            </div>
+            <div class="tag" id="nameTag">
+                {{tagData.이름}}
+            </div> 
+        </div>
     </v-card>
 </template>
 
@@ -20,13 +28,14 @@ export default {
     name:'ImgCard',
     data() {
         return {
-            path:''
+            path:'',
+
         }
     },
     props:{
         tagData: Object,
     },
-    computed: mapGetters(['imgId']),
+    computed: mapGetters(['imgId', 'saveWidth', 'saveHeight']),
 
     created(){
         this.path = require(`@/img/${this.imgId}.jpg`)
