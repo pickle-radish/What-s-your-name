@@ -1,7 +1,6 @@
 <template>
-    <v-app>
-        <h1>Image Custom</h1>
-        <v-row style="height:300" class="text-center">
+    <div style="margin: 0 15px">
+        <!-- <v-row class="text-center">
             <v-col :cols="9" id='imgBoard'>
                 <v-row style="height:100%" :align="`center`">
                     <v-col>
@@ -15,8 +14,23 @@
             <v-col :cols="3">
                 <customMenu />
             </v-col>
+        </v-row> -->
+        <v-row style="height:100%;" >
+            <v-col cols="9">
+                <v-row style="height:100%" align="center">
+                    <v-col>
+                        <div id="imgDiv">
+                            <ImgCard :tagData="testData" />
+                            <ImgCard class="saveCard" v-for="data in excelData" :key="data.id" :tagData="data"/>
+                        </div>
+                    </v-col>
+                </v-row>
+            </v-col>
+            <v-col cols="3">
+                <customMenu />
+            </v-col>
         </v-row>
-    </v-app>
+    </div>
 </template>
 
 <script>
@@ -55,14 +69,12 @@ export default {
     #imgDiv{
         display: flex; 
         justify-content : center;
+        align-items: center;
         position:relative;
     }
     .saveCard{
-
         position:absolute;
         z-index:-1; 
-
-
     }
 </style>
 

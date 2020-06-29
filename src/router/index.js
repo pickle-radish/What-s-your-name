@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import SelectTemp from '../views/SelectTemp.vue'
 import Custom from '../views/Custom.vue'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
@@ -16,11 +15,6 @@ Vue.use(VueRouter)
     path: '/custom',
     name: 'Custom',
     component: Custom
-  },
-  {
-    path: '/home',
-    name: 'Home',
-    component: Home
   },
 
 ]

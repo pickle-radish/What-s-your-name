@@ -11,14 +11,14 @@ export default new Vuex.Store({
     excelData:'',
     imgId:'',
     saveWidth:0,
-    saveHeigh:0,
+    saveHeight:0,
 
   },
   getters:{
     excelData : state => state.excelData,
     imgId :state => state.imgId,
     saveWidth : state => state.saveWidth,
-    saveHeight : state => state.saveHeigh,
+    saveHeight : state => state.saveHeight,
   },
   mutations: {
     setExcelData : (state, data) => state.excelData = data,
@@ -26,7 +26,7 @@ export default new Vuex.Store({
     setImgId :(state, data) => state.imgId = data,
 
     setSaveWidth : (state, data) => state.saveWidth = data,
-    setSaveHeigh : (state, data) => state.saveHeigh = data
+    setSaveHeight : (state, data) => state.saveHeight = data
   },
   actions: {
     readFile({commit}, event) { 
@@ -51,24 +51,22 @@ export default new Vuex.Store({
     },
     async saveTestFile(){
       const pdf = new jsPDF('p', 'mm', 'a4');
-      const printArea = document.getElementById("cardundefined");
-      const printAreaImg = document.getElementById("imgCardundefined");
+      const printArea = document.querySelector("#cardundefined");
+      const printAreaImg = document.querySelector("#imgCardundefined");
+      const tag = document.querySelector("#tagTest");
 
-      console.log(printArea.offsetWidth)
-      console.log(printArea.offsetHeight)
+      console.log(tag.style.top);
+
       printAreaImg.style.width= `${3.77 * 100}px`
-      printAreaImg.style.height= `${3.77 * 150}px`
-      
-      console.log(printArea.offsetWidth)
-      console.log(printArea.offsetHeight)
+      printAreaImg.style.height= `${3.77 * 143.5}px`
 
       try{
-        const canvas = await html2canvas(printArea )
+        const canvas = await html2canvas(printArea)
         const dataURL = canvas.toDataURL();
         pdf.addImage(dataURL, 'JPEG', 5,5);
         pdf.addImage(dataURL, 'JPEG', 105,5); 
-        pdf.addImage(dataURL, 'JPEG', 5,155);
-        pdf.addImage(dataURL, 'JPEG', 105, 155); 
+        pdf.addImage(dataURL, 'JPEG', 5, 148.5);
+        pdf.addImage(dataURL, 'JPEG', 105,  148.5); 
       } catch(err){
         console.error(err)
       }
@@ -79,13 +77,14 @@ export default new Vuex.Store({
           alert("엑셀 파일을 넣어주세요")
       }else{
         const pdf = new jsPDF('p', 'mm', 'a4');
+        console.log(state.excelData.length)
         
         for(let i=0; i<state.excelData.length; i++){
             const printArea = document.getElementById("card"+i.toString());
             const printAreaImg = document.getElementById("imgCard"+i.toString());
 
             printAreaImg.style.width= `${3.77 * 100}px`
-            printAreaImg.style.height= `${3.77 * 150}px`
+            printAreaImg.style.height= `${3.77 * 143.5}px`
             
             console.log(printArea.offsetWidth)
             try{
@@ -102,10 +101,10 @@ export default new Vuex.Store({
                       pdf.addImage(dataURL, 'JPEG', 105,5); 
                       break;
                   case 2:
-                      pdf.addImage(dataURL, 'JPEG', 5,155); 
+                      pdf.addImage(dataURL, 'JPEG', 5, 148.5); 
                       break;
                   case 3:
-                      pdf.addImage(dataURL, 'JPEG', 105, 155); 
+                      pdf.addImage(dataURL, 'JPEG', 105, 148.5); 
                       if(i+1 !== state.excelData.length){
                           pdf.addPage();
                       }
@@ -122,6 +121,15 @@ export default new Vuex.Store({
         
       }
     },
+    changeSize({commit}, data){
+      commit('setSaveWidth',data.saveWidth)
+      commit('setSaveHeight',data.saveHeight)
+      const printAreaImg = document.getElementById("imgCardundefined");
+      
+      printAreaImg.style.width= `${3.77 * data.saveWidth}px`
+      printAreaImg.style.height= `${3.77 * data.saveHeight}px`
+
+    }
   },
   modules: {
   }
