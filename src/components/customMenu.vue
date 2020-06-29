@@ -19,10 +19,9 @@
         <v-row>
             <v-col cols="12">
                 <div id="tagValue">
-                    <v-text-field v-for="tag in tags" :key="tag.name" :label="tag.name" dense style="padding:0px" v-model="tag.value"></v-text-field>
+                    <v-text-field v-for="tag in tags" :key="tag.id" :label="tag.name" dense style="padding:0px" v-model="tag.value"></v-text-field>
                 </div>
-                
-                <v-btn @click="addTag">태그 추가</v-btn>
+                <v-btn @click="$store.commit('addTag')">태그 추가</v-btn>
                 
             </v-col>
 
@@ -44,7 +43,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
     name: 'customMenu',
@@ -52,11 +51,13 @@ export default {
         return {
             saveWidth:'',
             saveHeight:'',
-            tags: [{name:'태그1', value:''}],
         }
     },
+    computed:{
+        ...mapGetters(['tags'])
+    },
     methods:{
-        ...mapActions(['readFile', 'savePdf', 'saveTestFile', 'changeSize']),
+        ...mapActions(['readFile', 'savePdf', 'saveTestFile', 'changeSize', 'alignCenter']),
         addTag(){
             this.tags.push({name: `태그${this.tags.length+1}`, value:''})
         },

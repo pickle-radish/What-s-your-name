@@ -9,14 +9,37 @@
                 {{tagData.이름}}
             </div> 
         </div> -->
-        <div :id="`card${tagData.id}`" >
+        <div :id="`card${tagData.id}`"  v-if="tagData.id != `undefined`">
             <img :src="path" alt="customImg" width="500" class="imageCard" :id="`imgCard${tagData.id}`">
             <!-- <div class="tag" id="affiliationTag">
                 {{tagData.소속}}
             </div> -->
-            <drag-it-dude id="tagTest">
-                <div id="nameTag">
-                    {{tagData.이름}}
+            <drag-it-dude
+                v-for="tag in tags" 
+                :key="tag.name" 
+                :id="`tag${tag.id}`" 
+                class="tags" 
+                :style="`top:${tag.top}; left: 50%; transform:translate(-50%)`"
+                >
+                <div @mouseup="alignCenter">
+                    {{tagData.태그1}}
+                </div>                                     
+            </drag-it-dude>
+        </div>
+        <div :id="`card${tagData.id}`" v-else>
+            <img :src="path" alt="customImg" width="500" class="imageCard" :id="`imgCard${tagData.id}`">
+            <!-- <div class="tag" id="affiliationTag">
+                {{tagData.소속}}
+            </div> -->
+            <drag-it-dude
+                v-for="tag in tags" 
+                :key="tag.name" 
+                :id="`tag${tag.id}`" 
+                class="tags" 
+                :style="`top:${tag.top}; left: 50%; transform:translate(-50%)`"
+                >
+                <div @mouseup="alignCenter">
+                    {{tag.value}}
                 </div>
             </drag-it-dude>
         </div>
@@ -24,7 +47,7 @@
 </template>
 
 <script>1
-import {mapGetters} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 import DragItDude from 'vue-drag-it-dude';
 
 export default {
@@ -41,8 +64,10 @@ export default {
     props:{
         tagData: Object,
     },
-    computed: mapGetters(['imgId', 'saveWidth', 'saveHeight']),
-
+    computed: mapGetters(['imgId', 'saveWidth', 'saveHeight', 'tags']),
+    methods:{
+        ...mapActions(['alignCenter'])
+    },
     created(){
         this.path = require(`@/img/${this.imgId}.jpg`)
     }
@@ -52,24 +77,25 @@ export default {
 <style> 
     #affiliationTag{
         font-size: 25px;
-        top:40%
-
-    }
-    #nameTag{
-        font-size: 40px;
-        top:50%
     }
 
     .imageCard{
         position: relative;
         display: block;
+        pointer-events: none;
     }
 
-    /* .tag{
-        position: absolute;
-
-        left:50%;
-        transform:translate(-50%);
-    } */
-
+    #tagTest{
+        top:200px;
+    }  
+    .tags{
+        font-size: 40px;
+    }
+    
+    .tags:hover{
+        cursor: grab;
+    }
+    .tags:active{
+        cursor: grabbing;
+    }
 </style>

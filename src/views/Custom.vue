@@ -44,8 +44,7 @@ export default {
     data() {
         return {
             testData:{
-                이름:"나상문",
-                소속:"열린문교회"
+                태그1:"나상문",
             }
         }
     },

@@ -10,15 +10,16 @@ export default new Vuex.Store({
   state: {
     excelData:'',
     imgId:'',
-    saveWidth:0,
-    saveHeight:0,
-
+    saveWidth:100,
+    saveHeight:145,
+    tags: [{id: 0, name:'태그1', value:'태그1', top:0}],
   },
   getters:{
     excelData : state => state.excelData,
     imgId :state => state.imgId,
     saveWidth : state => state.saveWidth,
     saveHeight : state => state.saveHeight,
+    tags: state => state.tags,
   },
   mutations: {
     setExcelData : (state, data) => state.excelData = data,
@@ -26,10 +27,22 @@ export default new Vuex.Store({
     setImgId :(state, data) => state.imgId = data,
 
     setSaveWidth : (state, data) => state.saveWidth = data,
-    setSaveHeight : (state, data) => state.saveHeight = data
+    setSaveHeight : (state, data) => state.saveHeight = data,
+
+    addTag: state => state.tags.push({id: state.tags.length ,name: `태그${state.tags.length+1}`, value:`태그${state.tags.length+1}`, top:0}),
+    
+    setTagPosition:(state, data) => state.tags[data.i].top = data.top 
+    // transform(state){
+    //   state.excelData.map(item=>{
+    //     item.forEach
+    //     return item.tags = 
+    //   }) 
+    // }
   },
   actions: {
-    readFile({commit}, event) { 
+    readFile({commit, state}, event) { 
+      
+
       const file = event.target.files[0]
       // const fileName = file.name
 
@@ -46,6 +59,7 @@ export default new Vuex.Store({
             return row.id=idx
           })
           commit('setExcelData', rows)
+          console.log(state.excelData)
       }
       reader.readAsArrayBuffer(file)
     },
@@ -77,44 +91,43 @@ export default new Vuex.Store({
           alert("엑셀 파일을 넣어주세요")
       }else{
         const pdf = new jsPDF('p', 'mm', 'a4');
-        console.log(state.excelData.length)
         
         for(let i=0; i<state.excelData.length; i++){
-            const printArea = document.getElementById("card"+i.toString());
-            const printAreaImg = document.getElementById("imgCard"+i.toString());
+          const printArea = document.querySelector("#card"+i.toString());
+          const printAreaImg = document.querySelector("#imgCard"+i.toString());
 
-            printAreaImg.style.width= `${3.77 * 100}px`
-            printAreaImg.style.height= `${3.77 * 143.5}px`
+          printAreaImg.style.width= `${3.77 * state.saveWidth}px`
+          printAreaImg.style.height= `${3.77 * state.saveHeight}px`
+          
+          console.log(printArea.offsetWidth)
+          try{
+            // const pixel = 3.77
             
-            console.log(printArea.offsetWidth)
-            try{
-              // const pixel = 3.77
-              
-              const canvas = await html2canvas(printArea)
+            const canvas = await html2canvas(printArea)
 
-              const dataURL = canvas.toDataURL();
-              switch(i%4){
-                  case 0:
-                      pdf.addImage(dataURL, 'JPEG', 5,5); 
-                      break;
-                  case 1:
-                      pdf.addImage(dataURL, 'JPEG', 105,5); 
-                      break;
-                  case 2:
-                      pdf.addImage(dataURL, 'JPEG', 5, 148.5); 
-                      break;
-                  case 3:
-                      pdf.addImage(dataURL, 'JPEG', 105, 148.5); 
-                      if(i+1 !== state.excelData.length){
-                          pdf.addPage();
-                      }
-                      break;
-                  default:
-                      break;    
-              }
-            }catch (err) {
-              console.error(err)
+            const dataURL = canvas.toDataURL();
+            switch(i%4){
+                case 0:
+                    pdf.addImage(dataURL, 'JPEG', 5,5); 
+                    break;
+                case 1:
+                    pdf.addImage(dataURL, 'JPEG', 105,5); 
+                    break;
+                case 2:
+                    pdf.addImage(dataURL, 'JPEG', 5, 148.5); 
+                    break;
+                case 3:
+                    pdf.addImage(dataURL, 'JPEG', 105, 148.5); 
+                    if(i+1 !== state.excelData.length){
+                        pdf.addPage();
+                    }
+                    break;
+                default:
+                    break;    
             }
+          }catch (err) {
+            console.error(err)
+          }
             
         }
         pdf.save('saved.pdf');
@@ -129,7 +142,16 @@ export default new Vuex.Store({
       printAreaImg.style.width= `${3.77 * data.saveWidth}px`
       printAreaImg.style.height= `${3.77 * data.saveHeight}px`
 
-    }
+    },
+    alignCenter({state, commit}){
+      for (let i = 0; i < state.tags.length; i++) {
+        const element = document.querySelector("#tag"+i.toString())
+        element.style.left = "50%"
+        element.style.transform = "translate(-50%)"
+        
+        commit('setTagPosition', {top:element.style.top, i})
+      } 
+    },
   },
   modules: {
   }
