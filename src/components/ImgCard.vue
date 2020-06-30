@@ -1,5 +1,5 @@
 <template>
-    <div id="tempCard">
+    <v-card>
         <div :id="`card${tagData.id}`" class="printDiv" v-if="tagData.id != undefined">
             <img :src="path" alt="customImg" width="500" class="imageCard" :id="`imgCard${tagData.id}`">
             <drag-it-dude
@@ -20,7 +20,7 @@
             <drag-it-dude
                 v-for="tag in tags" 
                 :key="tag.id" 
-                :id="`tempTag`" 
+                :id="`tag${tag.id}`" 
                 class="tags" 
                 >
                 <div :id='tagData.id'>
@@ -28,7 +28,7 @@
                 </div>
             </drag-it-dude>
         </div>
-    </div>
+    </v-card>
 </template>
 
 <script>

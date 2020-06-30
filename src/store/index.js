@@ -145,10 +145,9 @@ export default new Vuex.Store({
     },
     alignCenter({state, commit}){
       for (let i = 0; i < state.tags.length; i++) {
-        const element = document.querySelector("#tempTag")
+        const element = document.querySelector("#tag"+i.toString())
         element.style.left = "50%"
         element.style.transform = "translate(-50%)"
-        console.log(element.style.width)
         
         commit('setTagPosition', {top:element.style.top, i})
       } 
