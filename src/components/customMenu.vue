@@ -19,19 +19,23 @@
         <v-row>
             <v-col cols="1"></v-col>
             <v-col cols="10">
-                <v-row>
+                <v-row >
                     <v-col cols="12">
-                    <div id="tags" v-for="tag in tags" :key="tag.id" >
-                        <v-row dense>
-
-                                <v-col cols="3">
-                                    <v-text-field dense style="padding:0px" label="tag name" v-model="tag.name" class="tagLabel"></v-text-field>
-                                </v-col>
-                                <v-col cols="9">
-                                    <v-text-field dense style="padding:0px" label="value" v-model="tag.value" class="tagValue"></v-text-field>
-                                </v-col>
-
-                        </v-row>
+                    <div id="tagBox">
+                        <div id="tags" v-for="tag in tags" :key="tag.id" >
+                            <v-row dense>
+                                    <v-col cols="3">
+                                        <v-text-field dense style="padding:0px" label="tag" v-model="tag.name" class="tagLabel"></v-text-field>
+                                    </v-col>
+                                    <v-col cols="9"></v-col>
+                                    <v-col cols="8"> 
+                                        <v-text-field dense style="padding:0px" label="value" v-model="tag.value" class="tagValue"></v-text-field>
+                                    </v-col>
+                                    <v-col cols="2">
+                                        <v-text-field dense style="padding:0px" lable="font" type="number"></v-text-field>
+                                    </v-col>
+                            </v-row>
+                        </div>
                     </div>
                     <v-btn @click="alignCenter">가운데정렬</v-btn>
                     <v-btn @click="$store.commit('addTag')">태그 추가</v-btn>
@@ -80,9 +84,6 @@ export default {
         addTag(){
             this.tags.push({name: `태그${this.tags.length+1}`, value:''})
         },
-        changeSizeLocal(){
-            
-        }
     }
 }
 </script>
@@ -92,8 +93,12 @@ export default {
         width:90%;
         margin:auto;
     }
+    #tagBox{
+        height:300px;
+        overflow:scroll ;
+    }
     #tags{
-        width:100%;
+        width:98%;
     }
     .inputTag{
         display:inline-block;

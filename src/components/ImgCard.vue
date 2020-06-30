@@ -1,6 +1,6 @@
 <template>
-    <v-card outlined style='position:static'>
-        <div :id="`card${tagData.id}`"  v-if="tagData.id != undefined">
+    <div id="tempCard">
+        <div :id="`card${tagData.id}`" class="printDiv" v-if="tagData.id != undefined">
             <img :src="path" alt="customImg" width="500" class="imageCard" :id="`imgCard${tagData.id}`">
             <drag-it-dude
                 v-for="tag in tags" 
@@ -15,9 +15,7 @@
             </drag-it-dude>
         </div>
 
-
-
-        <div :id="`tempCard`" v-else>
+        <div :id="`tempDiv`" class="printDiv" v-else>
             <img :src="path" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`">
             <drag-it-dude
                 v-for="tag in tags" 
@@ -30,10 +28,10 @@
                 </div>
             </drag-it-dude>
         </div>
-    </v-card>
+    </div>
 </template>
 
-<script>1
+<script>
 import {mapActions, mapGetters} from 'vuex'
 import DragItDude from 'vue-drag-it-dude';
 
@@ -67,7 +65,7 @@ export default {
     }  
 
     .imageCard{
-        position: relative;
+        /* position: relative; */
         display: block;
         pointer-events: none;
         
@@ -76,10 +74,15 @@ export default {
         -moz-user-select: none;
         -webkit-user-select: none;
         user-select: none;
+        
     }
 
     #tempCard{
-        position:static;
+        position: relative;
+    }
+
+    .printDiv{
+        border: 1px solid;
     }
 
     #tagTest{

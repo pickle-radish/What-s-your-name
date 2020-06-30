@@ -17,7 +17,7 @@
         </v-row> -->
         <v-row style="height:100%;">
             <v-col cols="9">
-                <v-row style="height:100%" align="center">
+                <v-row style="height:100%" align="center" >   
                     <v-col>
                         <div id="imgDiv">
                             <ImgCard :tagData="testData" />
@@ -70,7 +70,7 @@ export default {
         justify-content : center;
         align-items: center;
         position:relative;
-        width:100%;
+        width: 100%;
     }
     .saveCard{
         position:absolute;
