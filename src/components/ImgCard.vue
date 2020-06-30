@@ -9,7 +9,7 @@
                 {{tagData.이름}}
             </div> 
         </div> -->
-        <div :id="`card${tagData.id}`"  v-if="tagData.id != `undefined`">
+        <div :id="`card${tagData.id}`"  v-if="tagData.id != undefined">
             <img :src="path" alt="customImg" width="500" class="imageCard" :id="`imgCard${tagData.id}`">
             <!-- <div class="tag" id="affiliationTag">
                 {{tagData.소속}}
@@ -22,10 +22,13 @@
                 :style="`top:${tag.top}; left: 50%; transform:translate(-50%)`"
                 >
                 <div @mouseup="alignCenter">
-                    {{tagData.태그1}}
+                    {{tagData[tag.name]}}
                 </div>                                     
             </drag-it-dude>
         </div>
+
+
+
         <div :id="`card${tagData.id}`" v-else>
             <img :src="path" alt="customImg" width="500" class="imageCard" :id="`imgCard${tagData.id}`">
             <!-- <div class="tag" id="affiliationTag">
