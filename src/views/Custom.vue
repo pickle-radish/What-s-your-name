@@ -1,5 +1,5 @@
 <template>
-    <div style="margin: 0 15px">
+    <div style="margin: 0 50px">
         <!-- <v-row class="text-center">
             <v-col :cols="9" id='imgBoard'>
                 <v-row style="height:100%" :align="`center`">
@@ -15,7 +15,7 @@
                 <customMenu />
             </v-col>
         </v-row> -->
-        <v-row style="height:100%;" >
+        <v-row style="height:100%;">
             <v-col cols="9">
                 <v-row style="height:100%" align="center">
                     <v-col>
@@ -70,6 +70,7 @@ export default {
         justify-content : center;
         align-items: center;
         position:relative;
+        width:100%;
     }
     .saveCard{
         position:absolute;

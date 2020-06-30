@@ -12,7 +12,7 @@ export default new Vuex.Store({
     imgId:'',
     saveWidth:100,
     saveHeight:145,
-    tags: [{id: 0, name:'태그1', value:'태그1', top:0}],
+    tags: [{id: 0, name:'', value:'태그1', top:0}],
   },
   getters:{
     excelData : state => state.excelData,
@@ -29,7 +29,7 @@ export default new Vuex.Store({
     setSaveWidth : (state, data) => state.saveWidth = data,
     setSaveHeight : (state, data) => state.saveHeight = data,
 
-    addTag: state => state.tags.push({id: state.tags.length ,name: `태그${state.tags.length+1}`, value:`태그${state.tags.length+1}`, top:0}),
+    addTag: state => state.tags.push({id: state.tags.length ,name: '', value:`태그${state.tags.length+1}`, top:0}),
     
     setTagPosition:(state, data) => state.tags[data.i].top = data.top 
     // transform(state){
@@ -65,8 +65,8 @@ export default new Vuex.Store({
     },
     async saveTestFile(){
       const pdf = new jsPDF('p', 'mm', 'a4');
-      const printArea = document.querySelector("#cardundefined");
-      const printAreaImg = document.querySelector("#imgCardundefined");
+      const printArea = document.querySelector("#tempCard");
+      const printAreaImg = document.querySelector("#tempImgCard");
       const tag = document.querySelector("#tagTest");
 
       console.log(tag.style.top);
@@ -137,7 +137,7 @@ export default new Vuex.Store({
     changeSize({commit}, data){
       commit('setSaveWidth',data.saveWidth)
       commit('setSaveHeight',data.saveHeight)
-      const printAreaImg = document.getElementById("imgCardundefined");
+      const printAreaImg = document.querySelector("#tempImgCard");
       
       printAreaImg.style.width= `${3.77 * data.saveWidth}px`
       printAreaImg.style.height= `${3.77 * data.saveHeight}px`
@@ -145,9 +145,10 @@ export default new Vuex.Store({
     },
     alignCenter({state, commit}){
       for (let i = 0; i < state.tags.length; i++) {
-        const element = document.querySelector("#tag"+i.toString())
+        const element = document.querySelector("#tempTag")
         element.style.left = "50%"
         element.style.transform = "translate(-50%)"
+        console.log(element.style.width)
         
         commit('setTagPosition', {top:element.style.top, i})
       } 

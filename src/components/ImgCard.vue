@@ -1,27 +1,15 @@
 <template>
-    <v-card outlined>
-        <!-- <div :id="`card${tagData.id}`" style="border: 0.7px ridge;">
-            <img :src="path" :id="`imgCard${tagData.id}`" width="500" class="imageCard">
-            <div class="tag" id="affiliationTag">
-                {{tagData.소속}}
-            </div>
-            <div class="tag" id="nameTag">
-                {{tagData.이름}}
-            </div> 
-        </div> -->
+    <v-card outlined style='position:static'>
         <div :id="`card${tagData.id}`"  v-if="tagData.id != undefined">
             <img :src="path" alt="customImg" width="500" class="imageCard" :id="`imgCard${tagData.id}`">
-            <!-- <div class="tag" id="affiliationTag">
-                {{tagData.소속}}
-            </div> -->
             <drag-it-dude
                 v-for="tag in tags" 
-                :key="tag.name" 
+                :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags" 
                 :style="`top:${tag.top}; left: 50%; transform:translate(-50%)`"
                 >
-                <div @mouseup="alignCenter">
+                <div>
                     {{tagData[tag.name]}}
                 </div>                                     
             </drag-it-dude>
@@ -29,19 +17,15 @@
 
 
 
-        <div :id="`card${tagData.id}`" v-else>
-            <img :src="path" alt="customImg" width="500" class="imageCard" :id="`imgCard${tagData.id}`">
-            <!-- <div class="tag" id="affiliationTag">
-                {{tagData.소속}}
-            </div> -->
+        <div :id="`tempCard`" v-else>
+            <img :src="path" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`">
             <drag-it-dude
                 v-for="tag in tags" 
-                :key="tag.name" 
-                :id="`tag${tag.id}`" 
+                :key="tag.id" 
+                :id="`tempTag`" 
                 class="tags" 
-                :style="`top:${tag.top}; left: 50%; transform:translate(-50%)`"
                 >
-                <div @mouseup="alignCenter">
+                <div :id='tagData.id'>
                     {{tag.value}}
                 </div>
             </drag-it-dude>
@@ -69,7 +53,7 @@ export default {
     },
     computed: mapGetters(['imgId', 'saveWidth', 'saveHeight', 'tags']),
     methods:{
-        ...mapActions(['alignCenter'])
+        ...mapActions(['alignCenter', 'freePosition'])
     },
     created(){
         this.path = require(`@/img/${this.imgId}.jpg`)
@@ -80,19 +64,32 @@ export default {
 <style> 
     #affiliationTag{
         font-size: 25px;
-    }
+    }  
 
     .imageCard{
         position: relative;
         display: block;
         pointer-events: none;
+        
+        -khtml-user-select: none;
+        -o-user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    #tempCard{
+        position:static;
     }
 
     #tagTest{
         top:200px;
-    }  
+    } 
+
     .tags{
         font-size: 40px;
+        overflow: visible;
+        white-space: nowrap;
     }
     
     .tags:hover{
