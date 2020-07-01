@@ -92,12 +92,8 @@ export default {
     } 
 
     .tags{
-        /* font-size: 40px;  */
         overflow: visible;
         white-space: nowrap;
-        /* font-family: 'Nanum Pen Script', serif; */
-        /* font-family: 'Gugi', serif; */
-        font-family: 'Gaegu', serif;
         
     }
     

@@ -5,6 +5,13 @@
             <v-col cols="10">
                 <v-row >
                     <v-col cols="12">
+                        <div style="margin-bottom: 20px; display:flex; justify-content: space-around">
+                            <v-btn color="#DAE2F0" @click="alignCenter">가운데정렬</v-btn>
+                            <v-btn color="#DAE2F0" @click="$store.commit('addTag')">태그 추가</v-btn>
+                        </div>
+                        <div>
+                            <v-select :items="fontList" label="글꼴 선택" item-value='id' item-text="name" :value="selectFont" @input="setFont"></v-select>
+                        </div>
                         <div id="tagBox">
                             <div class="inputTags" v-for="(tag, idx) in tags" :key="tag.id" >
                                 <v-row dense no-gutters>
@@ -26,23 +33,18 @@
                                 </v-row>
                             </div>
                         </div>
-                        <div>
-                            <v-select :items="fontList" label="글꼴 선택" item-value='id' item-text="name" :value="selectFont" @input="setFont"></v-select>
-                        </div>
-                        <v-btn @click="alignCenter">가운데정렬</v-btn>
-                        <v-btn @click="$store.commit('addTag')">태그 추가</v-btn>
+                        
                     </v-col>
-
-                    <v-col cols="12" style="display:flex; ">
-                        <v-text-field label="가로길이" dense style="padding:0px" v-model="saveWidth" @keypress.enter="changeSize({saveWidth, saveHeight})"></v-text-field>
-                        <v-text-field label="세로길이" dense style="padding:0px" v-model="saveHeight" @keypress.enter="changeSize({saveWidth, saveHeight})"></v-text-field>
-                        <v-btn small @click="changeSize({saveWidth, saveHeight})" style="margin-top:5px">변경</v-btn>
+                    <v-col cols="12" style="display:flex; justify-content: space-around ">
+                        <v-text-field label="가로길이" dense style="padding:3px" v-model="saveWidth" @keypress.enter="changeSize({saveWidth, saveHeight})"></v-text-field>
+                        <v-text-field label="세로길이" dense style="padding:3px" v-model="saveHeight" @keypress.enter="changeSize({saveWidth, saveHeight})"></v-text-field>
+                        <v-btn color="#DAE2F0" small @click="changeSize({saveWidth, saveHeight})" style="margin-top:5px">변경</v-btn>
                     </v-col>
 
                     <v-col>
-                        <input type="file" @change="readFile" id="inputFile" accept=".xlsx">
-                        <v-btn large width="200" @click="saveTestFile" style="margin-top:10px">Test 파일 저장하기</v-btn>
-                        <v-btn large width="200" @click="savePdf" style="margin-top:10px">PDF로 저장하기</v-btn>
+                        <v-file-input label="File input" accept=".xlsx" ></v-file-input>
+                        <v-btn color="#DAE2F0" large width="200" @click="saveTestFile" style="margin-top:10px">Test 파일 저장하기</v-btn>
+                        <v-btn color="#DAE2F0" large width="200" @click="savePdf" style="margin-top:10px">PDF로 저장하기</v-btn>
                     </v-col>
                     
                 </v-row>
@@ -86,18 +88,11 @@ export default {
 </script>
 
 <style>
-    .my-2{
-        width:90%;
-        margin:auto;
-    }
     #toolBox{
         background-color: rgba(0,0,0,0);
     }
     #tagBox{
         height:250px;
-        /* overflow-x: visible;    
-        overflow-y: scroll; */
-
     }
     .inputTags{
         padding-top:10px;

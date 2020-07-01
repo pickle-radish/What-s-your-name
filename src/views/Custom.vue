@@ -42,7 +42,6 @@ export default {
         
     },
     created(){
-        // this.path = require(`@/img/${this.$route.query.name}.jpg`)
         this.$store.commit('setImgId', this.$route.query.name)
         
     },

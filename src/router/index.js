@@ -12,9 +12,9 @@ Vue.use(VueRouter)
     component: SelectTemp
   },
   {
-    path: '/custom',
+    path: '/custom/',
     name: 'Custom',
-    component: Custom
+    component: Custom,
   },
 
 ]
