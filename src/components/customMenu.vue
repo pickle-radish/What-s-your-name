@@ -84,7 +84,7 @@ export default {
         background-color: rgba(0,0,0,0);
     }
     #tagBox{
-        height:300px;
+        height:250px;
         /* overflow-x: visible;    
         overflow-y: scroll; */
 

@@ -29,7 +29,13 @@ export default new Vuex.Store({
     setSaveWidth : (state, data) => state.saveWidth = data,
     setSaveHeight : (state, data) => state.saveHeight = data,
 
-    addTag: state => state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, fontSize:40}),
+    addTag(state){
+      if (state.tags.length<5){
+        state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, fontSize:40})
+      }else{
+        alert("태그의 개수는 최대 5개 입니다")
+      }
+    },
     
     setTagPosition:(state, data) => state.tags[data.i].top = data.top,
 
