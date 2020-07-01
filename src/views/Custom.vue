@@ -73,7 +73,6 @@ export default {
         width: 100%;
     }
     .saveCard{
-        position:absolute;
         z-index:-1; 
     }
 </style>

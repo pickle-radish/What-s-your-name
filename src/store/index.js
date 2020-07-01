@@ -63,28 +63,32 @@ export default new Vuex.Store({
       }
       reader.readAsArrayBuffer(file)
     },
-    async saveTestFile(){
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const printArea = document.querySelector("#tempCard");
-      const printAreaImg = document.querySelector("#tempImgCard");
-      const tag = document.querySelector("#tagTest");
+    async saveTestFile({state}){
+      if (state.excelData.length==0) {
+        alert("엑셀 파일을 넣어주세요")
+      }else{
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        // const printArea = document.querySelector("#tempCard");
+        // const printAreaImg = document.querySelector("#tempImgCard");
+        
+        const printArea = document.querySelector("#card0")
+        const printAreaImg = document.querySelector("#imgCard0")
 
-      console.log(tag.style.top);
+        printAreaImg.style.width= `${3.77 * state.saveWidth}px`
+        printAreaImg.style.height= `${3.77 * state.saveHeight}px`
 
-      printAreaImg.style.width= `${3.77 * 100}px`
-      printAreaImg.style.height= `${3.77 * 143.5}px`
-
-      try{
-        const canvas = await html2canvas(printArea)
-        const dataURL = canvas.toDataURL();
-        pdf.addImage(dataURL, 'JPEG', 5,5);
-        pdf.addImage(dataURL, 'JPEG', 105,5); 
-        pdf.addImage(dataURL, 'JPEG', 5, 148.5);
-        pdf.addImage(dataURL, 'JPEG', 105,  148.5); 
-      } catch(err){
-        console.error(err)
+        try{
+          const canvas = await html2canvas(printArea)
+          const dataURL = canvas.toDataURL();
+          pdf.addImage(dataURL, 'JPEG', 5,5);
+          pdf.addImage(dataURL, 'JPEG', 105,5); 
+          pdf.addImage(dataURL, 'JPEG', 5, 148.5);
+          pdf.addImage(dataURL, 'JPEG', 105,  148.5); 
+        } catch(err){
+          console.error(err)
+        }
+        pdf.save('saved.pdf');
       }
-      pdf.save('saved.pdf');
     },
     async savePdf({state}) {
       if (state.excelData.length==0) {

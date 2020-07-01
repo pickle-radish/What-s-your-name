@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <div id="imgCard">
         <div :id="`card${tagData.id}`" class="printDiv" v-if="tagData.id != undefined">
             <img :src="path" alt="customImg" width="500" class="imageCard" :id="`imgCard${tagData.id}`">
             <drag-it-dude
@@ -28,7 +28,7 @@
                 </div>
             </drag-it-dude>
         </div>
-    </v-card>
+    </div >
 </template>
 
 <script>
@@ -77,8 +77,8 @@ export default {
         
     }
 
-    #tempCard{
-        position: relative;
+    #imgCard{
+        position: absolute;
     }
 
     .printDiv{
