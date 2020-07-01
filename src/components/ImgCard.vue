@@ -21,9 +21,10 @@
                 v-for="tag in tags" 
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
-                class="tags" 
+                class="tags"
+                :style="`font-size:${tag.fontSize}px`"
                 >
-                <div :id='tagData.id'>
+                <div :id='tagData.id' >
                     {{tag.value}}
                 </div>
             </drag-it-dude>
@@ -90,7 +91,7 @@ export default {
     } 
 
     .tags{
-        font-size: 40px;
+        /* font-size: 40px;  */
         overflow: visible;
         white-space: nowrap;
     }

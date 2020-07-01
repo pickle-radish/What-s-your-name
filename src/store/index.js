@@ -12,7 +12,7 @@ export default new Vuex.Store({
     imgId:'',
     saveWidth:0,
     saveHeight:0,
-    tags: [{id: 0, name:'', value:'태그1', top:0}],
+    tags: [{id: 0, name:'', value:'태그1', top:0, fontSize:40}],
   },
   getters:{
     excelData : state => state.excelData,
@@ -29,15 +29,10 @@ export default new Vuex.Store({
     setSaveWidth : (state, data) => state.saveWidth = data,
     setSaveHeight : (state, data) => state.saveHeight = data,
 
-    addTag: state => state.tags.push({id: state.tags.length ,name: '', value:`태그${state.tags.length+1}`, top:0}),
+    addTag: state => state.tags.push({id: state.tags.length ,name: '', value:`태그${state.tags.length+1}`, top:0, fontSize:40}),
     
     setTagPosition:(state, data) => state.tags[data.i].top = data.top 
-    // transform(state){
-    //   state.excelData.map(item=>{
-    //     item.forEach
-    //     return item.tags = 
-    //   }) 
-    // }
+    
   },
   actions: {
     readFile({commit, state}, event) { 

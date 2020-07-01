@@ -1,38 +1,27 @@
 <template>
-    <v-card outlined height="100%" class="text-center" id="toolBox">
-        <!-- <div class="my-2" >
-            <v-text-field label="가로길이" :full-width="true"></v-text-field>
-            <v-btn small color="primary" >변경</v-btn>
-        </div>
-        <div class="my-2">
-            <input type="file" @change="readFile">
-        </div>
-        <div class="my-2">
-            <v-btn large color="primary" width="200" @click="saveTestFile">Test 파일 저장하기</v-btn>
-        </div>
-
-        <div class="my-2">
-            <v-btn large color="primary" width="200" @click="savePdf">PDF로 저장하기</v-btn>
-        </div> -->
-
-
-        <v-row>
+    <v-card  height="100%" class="text-center" id="toolBox">
+        <v-row style="boder: 1px solid;">
             <v-col cols="1"></v-col>
             <v-col cols="10">
                 <v-row >
                     <v-col cols="12">
                     <div id="tagBox">
-                        <div id="tags" v-for="tag in tags" :key="tag.id" >
-                            <v-row dense>
+                        <div class="inputTags" v-for="tag in tags" :key="tag.id" >
+                            <v-row dense no-gutters>
                                     <v-col cols="3">
-                                        <v-text-field dense style="padding:0px" label="tag" v-model="tag.name" class="tagLabel"></v-text-field>
+                                        <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="tag" v-model="tag.name" ></v-text-field>
                                     </v-col>
-                                    <v-col cols="9"></v-col>
-                                    <v-col cols="8"> 
-                                        <v-text-field dense style="padding:0px" label="value" v-model="tag.value" class="tagValue"></v-text-field>
+                                    <v-col cols="6"> 
+                                        <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="value" v-model="tag.value"></v-text-field>
                                     </v-col>
                                     <v-col cols="2">
-                                        <v-text-field dense style="padding:0px" lable="font" type="number"></v-text-field>
+                                        <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="font" type="number" v-model="tag.fontSize"></v-text-field>
+                                    </v-col>
+                                    <v-col cols="1">
+                                        <v-btn class="mx-2" fab dark small color="primary">
+                                            <v-icon >mdi-minus</v-icon>
+                                        </v-btn>
+                                        
                                     </v-col>
                             </v-row>
                         </div>
@@ -58,9 +47,6 @@
                 </v-row>
                 
             </v-col>
-
-            
-            
         </v-row>
     </v-card>
 </template>
@@ -74,6 +60,7 @@ export default {
         return {
             saveWidth:'',
             saveHeight:'',
+
         }
     },
     computed:{
@@ -93,14 +80,16 @@ export default {
         width:90%;
         margin:auto;
     }
+    #toolBox{
+        background-color: rgba(0,0,0,0);
+    }
     #tagBox{
         height:300px;
-        overflow:scroll ;
+        /* overflow-x: visible;    
+        overflow-y: scroll; */
+
     }
-    #tags{
-        width:98%;
-    }
-    .inputTag{
-        display:inline-block;
+    .inputTags{
+        padding-top:10px;
     }
 </style>
