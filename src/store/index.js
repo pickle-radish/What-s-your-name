@@ -29,7 +29,7 @@ export default new Vuex.Store({
     setSaveWidth : (state, data) => state.saveWidth = data,
     setSaveHeight : (state, data) => state.saveHeight = data,
 
-    addTag: state => state.tags.push({id: state.tags.length ,name: '', value:`태그${state.tags.length+1}`, top:0, fontSize:40}),
+    addTag: state => state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, fontSize:40}),
     
     setTagPosition:(state, data) => state.tags[data.i].top = data.top,
 
@@ -152,7 +152,7 @@ export default new Vuex.Store({
     },
     alignCenter({state, commit}){
       for (let i = 0; i < state.tags.length; i++) {
-        const element = document.querySelector("#tag"+i.toString())
+        const element = document.querySelector("#tag"+state.tags[i].id)
         element.style.left = "50%"
         element.style.transform = "translate(-50%)"
         
