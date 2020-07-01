@@ -6,6 +6,12 @@
             <v-col cols="3">
                 <v-card outlined height="100%" id="addCard">
                     <div id="addDiv">+</div>
+                    <input
+                        id="addImgInput"
+                        type="file" 
+                        accept="image/*"
+                        @change="addUserImage"
+                        >
                 </v-card>
             </v-col>
             <v-col cols="3">
@@ -27,8 +33,16 @@
 </template>
 
 <script>
+import router from '@/router/index'
+
 export default {
     name: 'SelectTemp',
+
+    methods:{
+        addUserImage(){
+            router.push('/custom?name=a')
+        }
+    }
 }
 </script>
 
@@ -40,11 +54,19 @@ export default {
         display:flex;
         justify-content: center;
         align-items: center;
-        
-        cursor: pointer;
     }
     #addCard:hover {
         background-color: #9999;
+    }
+    #addImgInput{
+        position: absolute;
+    
+        width:100%;
+        height:100%;
+
+        cursor: pointer;
+
+        opacity: 0;
     }
     #addDiv{
         font-size: 40px;
@@ -58,7 +80,7 @@ export default {
         
         border-radius: 50%;
 
-        opacity: 0.5;
+        opacity: 0.3;
 
     }
 </style>
