@@ -6,7 +6,7 @@
                 <v-row >
                     <v-col cols="12">
                     <div id="tagBox">
-                        <div class="inputTags" v-for="tag in tags" :key="tag.id" >
+                        <div class="inputTags" v-for="(tag, idx) in tags" :key="tag.id" >
                             <v-row dense no-gutters>
                                     <v-col cols="3">
                                         <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="tag" v-model="tag.name" ></v-text-field>
@@ -18,7 +18,7 @@
                                         <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="font" type="number" v-model="tag.fontSize"></v-text-field>
                                     </v-col>
                                     <v-col cols="1">
-                                        <v-btn class="mx-2" fab dark small color="primary">
+                                        <v-btn class="mx-2" fab dark x-small outlined color="error" @click="$store.commit('removeTag', idx)">
                                             <v-icon >mdi-minus</v-icon>
                                         </v-btn>
                                         

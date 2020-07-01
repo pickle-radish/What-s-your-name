@@ -31,7 +31,10 @@ export default new Vuex.Store({
 
     addTag: state => state.tags.push({id: state.tags.length ,name: '', value:`태그${state.tags.length+1}`, top:0, fontSize:40}),
     
-    setTagPosition:(state, data) => state.tags[data.i].top = data.top 
+    setTagPosition:(state, data) => state.tags[data.i].top = data.top,
+
+    removeTag : (state, idx) => state.tags.splice(idx, 1)
+
     
   },
   actions: {
@@ -152,7 +155,7 @@ export default new Vuex.Store({
         const element = document.querySelector("#tag"+i.toString())
         element.style.left = "50%"
         element.style.transform = "translate(-50%)"
-        console.log('align center')
+        
         commit('setTagPosition', {top:element.style.top, i})
       } 
     },
