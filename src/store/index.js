@@ -13,6 +13,7 @@ export default new Vuex.Store({
     saveWidth:0,
     saveHeight:0,
     tags: [{id: 0, name:'', value:'태그1', top:0, fontSize:40}],
+    selectFont: 'Gamja Flower',
   },
   getters:{
     excelData : state => state.excelData,
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     saveWidth : state => state.saveWidth,
     saveHeight : state => state.saveHeight,
     tags: state => state.tags,
+    selectFont: state => state.selectFont,
   },
   mutations: {
     setExcelData : (state, data) => state.excelData = data,
@@ -39,9 +41,10 @@ export default new Vuex.Store({
     
     setTagPosition:(state, data) => state.tags[data.i].top = data.top,
 
-    removeTag : (state, idx) => state.tags.splice(idx, 1)
+    removeTag : (state, idx) => state.tags.splice(idx, 1),
 
-    
+    setFont : (state, value) => state.selectFont = value,
+        
   },
   actions: {
     readFile({commit, state}, event) { 

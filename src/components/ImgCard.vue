@@ -7,7 +7,7 @@
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags" 
-                :style="`top:${tag.top}; left: 50%; transform:translate(-50%)`"
+                :style="`top:${tag.top}; left: 50%; transform:translate(-50%); font-size:${tag.fontSize}px; font-family: ${selectFont}`"
                 >
                 <div>
                     {{tagData[tag.name]}}
@@ -22,7 +22,7 @@
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags"
-                :style="`font-size:${tag.fontSize}px`"
+                :style="`font-size:${tag.fontSize}px; font-family: ${selectFont} `"
                 >
                 <div :id='tagData.id' >
                     {{tag.value}}
@@ -50,7 +50,7 @@ export default {
     props:{
         tagData: Object,
     },
-    computed: mapGetters(['imgId', 'saveWidth', 'saveHeight', 'tags']),
+    computed: mapGetters(['imgId', 'saveWidth', 'saveHeight', 'tags', 'selectFont']),
     methods:{
         ...mapActions(['alignCenter', 'freePosition'])
     },
@@ -60,7 +60,8 @@ export default {
 }
 </script>
 
-<style> 
+<style type="text/css"> 
+
     #affiliationTag{
         font-size: 25px;
     }  
@@ -94,6 +95,10 @@ export default {
         /* font-size: 40px;  */
         overflow: visible;
         white-space: nowrap;
+        /* font-family: 'Nanum Pen Script', serif; */
+        /* font-family: 'Gugi', serif; */
+        font-family: 'Gaegu', serif;
+        
     }
     
     .tags:hover{
