@@ -10,8 +10,8 @@ export default new Vuex.Store({
   state: {
     excelData:'',
     imgId:'',
-    saveWidth:100,
-    saveHeight:145,
+    saveWidth:0,
+    saveHeight:0,
     tags: [{id: 0, name:'', value:'태그1', top:0}],
   },
   getters:{
@@ -66,6 +66,8 @@ export default new Vuex.Store({
     async saveTestFile({state}){
       if (state.excelData.length==0) {
         alert("엑셀 파일을 넣어주세요")
+      }else if(!state.saveWidth || !state.saveHeight){
+        alert("가로 세로 크기를 입력해 주세요")
       }else{
         const pdf = new jsPDF('p', 'mm', 'a4');
         // const printArea = document.querySelector("#tempCard");
@@ -92,7 +94,9 @@ export default new Vuex.Store({
     },
     async savePdf({state}) {
       if (state.excelData.length==0) {
-          alert("엑셀 파일을 넣어주세요")
+        alert("엑셀 파일을 넣어주세요")
+      }else if(!state.saveWidth || !state.saveHeight){
+        alert("가로 세로 크기를 입력해 주세요")
       }else{
         const pdf = new jsPDF('p', 'mm', 'a4');
         
@@ -103,7 +107,6 @@ export default new Vuex.Store({
           printAreaImg.style.width= `${3.77 * state.saveWidth}px`
           printAreaImg.style.height= `${3.77 * state.saveHeight}px`
           
-          console.log(printArea.offsetWidth)
           try{
             // const pixel = 3.77
             
@@ -138,7 +141,7 @@ export default new Vuex.Store({
         
       }
     },
-    changeSize({commit}, data){
+    changeSize({commit,dispatch}, data){
       commit('setSaveWidth',data.saveWidth)
       commit('setSaveHeight',data.saveHeight)
       const printAreaImg = document.querySelector("#tempImgCard");
@@ -146,13 +149,15 @@ export default new Vuex.Store({
       printAreaImg.style.width= `${3.77 * data.saveWidth}px`
       printAreaImg.style.height= `${3.77 * data.saveHeight}px`
 
+      dispatch('alignCenter')
+
     },
     alignCenter({state, commit}){
       for (let i = 0; i < state.tags.length; i++) {
         const element = document.querySelector("#tag"+i.toString())
         element.style.left = "50%"
         element.style.transform = "translate(-50%)"
-        
+        console.log('align center')
         commit('setTagPosition', {top:element.style.top, i})
       } 
     },
