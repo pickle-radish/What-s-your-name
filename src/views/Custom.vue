@@ -37,13 +37,14 @@ export default {
         ImgCard,
         customMenu
     },
-    computed: mapGetters(['excelData']),
+    computed: mapGetters(['excelData', 'userImg']),
     methods:{
         
     },
     created(){
-        this.$store.commit('setImgId', this.$route.query.name)
-        
+        if(!this.$route.query.customImg){
+            this.$store.commit('setImgPath', require(`@/img/${this.$route.query.name}.jpg`))
+        }
     },
 }
 </script>

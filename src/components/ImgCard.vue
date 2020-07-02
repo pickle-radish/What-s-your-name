@@ -1,7 +1,7 @@
 <template>
     <div id="imgCard">
         <div :id="`card${tagData.id}`" class="printDiv" v-if="tagData.id != undefined">
-            <img :src="path" alt="customImg" width="500" class="imageCard" :id="`imgCard${tagData.id}`">
+            <img :src="imgPath" alt="customImg" width="500" class="imageCard" :id="`imgCard${tagData.id}`">
             <drag-it-dude
                 v-for="tag in tags" 
                 :key="tag.id" 
@@ -16,7 +16,7 @@
         </div>
 
         <div :id="`tempDiv`" class="printDiv" v-else>
-            <img :src="path" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`">
+            <img :src="imgPath" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`">
             <drag-it-dude
                 v-for="tag in tags" 
                 :key="tag.id" 
@@ -41,22 +41,13 @@ export default {
     components:{
         DragItDude
     },
-    data() {
-        return {
-            path:'',
-
-        }
-    },
     props:{
         tagData: Object,
     },
-    computed: mapGetters(['imgId', 'saveWidth', 'saveHeight', 'tags', 'selectFont']),
+    computed: mapGetters(['imgPath', 'saveWidth', 'saveHeight', 'tags', 'selectFont']),
     methods:{
         ...mapActions(['alignCenter', 'freePosition'])
     },
-    created(){
-        this.path = require(`@/img/${this.imgId}.jpg`)
-    }
 }
 </script>
 

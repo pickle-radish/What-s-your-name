@@ -42,7 +42,7 @@
                     </v-col>
 
                     <v-col>
-                        <v-file-input label="File input" accept=".xlsx" ></v-file-input>
+                        <v-file-input label="File input" accept=".xlsx" @change="readFile"></v-file-input>
                         <v-btn color="#DAE2F0" large width="200" @click="saveTestFile" style="margin-top:10px">Test 파일 저장하기</v-btn>
                         <v-btn color="#DAE2F0" large width="200" @click="savePdf" style="margin-top:10px">PDF로 저장하기</v-btn>
                     </v-col>

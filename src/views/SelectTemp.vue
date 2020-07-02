@@ -11,6 +11,7 @@
                         type="file" 
                         accept="image/*"
                         @change="addUserImage"
+                        name="userImg"
                         >
                 </v-card>
             </v-col>
@@ -33,14 +34,32 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex'
 import router from '@/router/index'
+
 
 export default {
     name: 'SelectTemp',
 
+    computed:{
+        ...mapGetters(['userImg'])
+    },
     methods:{
-        addUserImage(){
-            router.push('/custom?name=a')
+        ...mapActions(['inputUserImg']),
+        addUserImage(event){
+            let files = event.target.files;
+            // FileReader support
+            if (FileReader && files && files.length) {
+                let fr = new FileReader();
+                fr.onload = ()=> {
+                    this.$store.commit('setImgPath', fr.result)
+                }
+                fr.readAsDataURL(files[0]);
+                router.push(`/custom?customImg=true`)
+            }else{
+                alert("이미지 업로드에 실패했습니다")
+            }
+
         }
     }
 }

@@ -10,24 +10,34 @@ export default new Vuex.Store({
   state: {
     excelData:'',
     imgId:'',
+    imgPath:'',
     saveWidth:0,
     saveHeight:0,
     tags: [{id: 0, name:'', value:'태그1', top:0, fontSize:40}],
     selectFont: 'Gamja Flower',
+    userImg: '',
   },
   getters:{
     excelData : state => state.excelData,
     imgId :state => state.imgId,
+    imgPath : state => state.imgPath,
     saveWidth : state => state.saveWidth,
     saveHeight : state => state.saveHeight,
     tags: state => state.tags,
     selectFont: state => state.selectFont,
+    userImg: state => state.userImg,
   },
   mutations: {
     setExcelData : (state, data) => state.excelData = data,
 
     setImgId :(state, data) => state.imgId = data,
 
+    setImgPath : (state, data) => state.imgPath = data,
+    // setImgPath(state, data) {
+    //   console.log("setImg Path", data)
+    //   state.imgPath = data
+    // },
+   
     setSaveWidth : (state, data) => state.saveWidth = data,
     setSaveHeight : (state, data) => state.saveHeight = data,
 
@@ -43,13 +53,14 @@ export default new Vuex.Store({
 
     removeTag : (state, idx) => state.tags.splice(idx, 1),
 
-    setFont : (state, value) => state.selectFont = value,
-        
+    setFont : (state, data) => state.selectFont = data,
+    
+    setUserImg : (state, data) => state.userImg = data
   },
   actions: {
     readFile({commit, state}, event) { 
-      
-
+      console.log('read file')
+      console.log('event: ', event.target.files)
       const file = event.target.files[0]
       // const fileName = file.name
 
@@ -168,6 +179,20 @@ export default new Vuex.Store({
         commit('setTagPosition', {top:element.style.top, i})
       } 
     },
+    inputUserImg({commit}, event){
+      let files = event.target.files;
+
+      // FileReader support
+      if (FileReader && files && files.length) {
+          let fr = new FileReader();
+          fr.onload = function () {
+              document.getElementById("addTestImg").src = fr.result;
+              commit('setUserImg', fr.result);
+          }
+          fr.readAsDataURL(files[0]);
+      }
+
+    }
   },
   modules: {
   }
