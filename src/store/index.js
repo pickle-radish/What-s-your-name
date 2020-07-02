@@ -11,8 +11,8 @@ export default new Vuex.Store({
     excelData:'',
     imgId:'',
     imgPath:'',
-    saveWidth:0,
-    saveHeight:0,
+    saveWidth:100,
+    saveHeight:145,
     tags: [{id: 0, name:'', value:'태그1', top:0, fontSize:40}],
     selectFont: 'Gamja Flower',
     userImg: '',
@@ -157,7 +157,7 @@ export default new Vuex.Store({
         
       }
     },
-    changeSize({commit,dispatch}, data){
+    changeSize({commit}, data){
       commit('setSaveWidth',data.saveWidth)
       commit('setSaveHeight',data.saveHeight)
       const printAreaImg = document.querySelector("#tempImgCard");
@@ -165,7 +165,7 @@ export default new Vuex.Store({
       printAreaImg.style.width= `${3.77 * data.saveWidth}px`
       printAreaImg.style.height= `${3.77 * data.saveHeight}px`
 
-      dispatch('alignCenter')
+      // dispatch('alignCenter')
 
     },
     alignCenter({state, commit}){

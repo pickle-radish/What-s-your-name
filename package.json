@@ -10,6 +10,8 @@
   "dependencies": {
     "autoprefixer": "9.8.0",
     "core-js": "^3.6.5",
+    "firebase": "7.15.5",
+    "firebaseui": "4.5.1",
     "html2canvas": "1.0.0-rc.5",
     "jspdf": "1.5.3",
     "vue": "^2.6.11",

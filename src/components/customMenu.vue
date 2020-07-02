@@ -61,8 +61,8 @@ export default {
     name: 'customMenu',
     data() {
         return {
-            saveWidth:'',
-            saveHeight:'',
+            saveWidth:100,
+            saveHeight:145,
 
             fontList:[
                 {id: 'Gamja Flower', name:"감자꽃마을"},
@@ -82,9 +82,6 @@ export default {
         },
         setFont(val){
             this.$store.commit('setFont', val)
-        },
-        readExcel(event){
-            console.log(event)
         }
     }
 }

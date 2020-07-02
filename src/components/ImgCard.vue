@@ -1,7 +1,7 @@
 <template>
     <div id="imgCard">
         <div :id="`card${tagData.id}`" class="printDiv" v-if="tagData.id != undefined">
-            <img :src="imgPath" alt="customImg" width="500" class="imageCard" :id="`imgCard${tagData.id}`">
+            <img :src="imgPath" alt="customImg" class="imageCard" :id="`imgCard${tagData.id}`">
             <drag-it-dude
                 v-for="tag in tags" 
                 :key="tag.id" 
@@ -16,7 +16,7 @@
         </div>
 
         <div :id="`tempDiv`" class="printDiv" v-else>
-            <img :src="imgPath" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`">
+            <img :src="imgPath" alt="customImg" :width="`${3.77*100}px`" :height="`${3.77*145}px`" class="imageCard" :id="`tempImgCard`">
             <drag-it-dude
                 v-for="tag in tags" 
                 :key="tag.id" 
