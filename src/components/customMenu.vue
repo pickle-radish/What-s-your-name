@@ -82,6 +82,9 @@ export default {
         },
         setFont(val){
             this.$store.commit('setFont', val)
+        },
+        readExcel(event){
+            console.log(event)
         }
     }
 }

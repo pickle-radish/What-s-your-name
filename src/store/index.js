@@ -58,10 +58,9 @@ export default new Vuex.Store({
     setUserImg : (state, data) => state.userImg = data
   },
   actions: {
-    readFile({commit, state}, event) { 
-      console.log('read file')
-      console.log('event: ', event.target.files)
-      const file = event.target.files[0]
+    readFile({commit}, event) { 
+
+      const file = event
       // const fileName = file.name
 
       const reader = new FileReader()
@@ -77,7 +76,6 @@ export default new Vuex.Store({
             return row.id=idx
           })
           commit('setExcelData', rows)
-          console.log(state.excelData)
       }
       reader.readAsArrayBuffer(file)
     },
