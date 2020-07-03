@@ -16,19 +16,18 @@
                             <div class="inputTags" v-for="(tag, idx) in tags" :key="tag.id" >
                                 <v-row dense no-gutters>
                                         <v-col cols="3">
-                                            <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="tag" v-model="tag.name" ></v-text-field>
+                                            <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="tag" v-model="tag.name" autocomplete="off"></v-text-field>
                                         </v-col>
                                         <v-col cols="6"> 
-                                            <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="value" v-model="tag.value"></v-text-field>
+                                            <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="value" v-model="tag.value" autocomplete="off"></v-text-field>
                                         </v-col>
                                         <v-col cols="2">
-                                            <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="font" type="number" v-model="tag.fontSize"></v-text-field>
+                                            <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="font" type="number" v-model="tag.fontSize" autocomplete="off"></v-text-field>
                                         </v-col>
                                         <v-col cols="1">
                                             <v-btn class="mx-2" fab dark x-small outlined color="error" @click="$store.commit('removeTag', idx)">
                                                 <v-icon >mdi-minus</v-icon>
                                             </v-btn>
-                                            
                                         </v-col>
                                 </v-row>
                             </div>
@@ -36,8 +35,8 @@
                         
                     </v-col>
                     <v-col cols="12" style="display:flex; justify-content: space-around ">
-                        <v-text-field label="가로길이" dense style="padding:3px" v-model="saveWidth" @keypress.enter="changeSize({saveWidth, saveHeight})"></v-text-field>
-                        <v-text-field label="세로길이" dense style="padding:3px" v-model="saveHeight" @keypress.enter="changeSize({saveWidth, saveHeight})"></v-text-field>
+                        <v-text-field label="가로길이" dense style="padding:3px" v-model="saveWidth" @keypress.enter="changeSize({saveWidth, saveHeight})" autocomplete="off"></v-text-field>
+                        <v-text-field label="세로길이" dense style="padding:3px" v-model="saveHeight" @keypress.enter="changeSize({saveWidth, saveHeight})" autocomplete="off"></v-text-field>
                         <v-btn color="#DAE2F0" small @click="changeSize({saveWidth, saveHeight})" style="margin-top:5px">변경</v-btn>
                     </v-col>
 
@@ -61,13 +60,20 @@ export default {
     name: 'customMenu',
     data() {
         return {
-            saveWidth:100,
-            saveHeight:145,
+            saveWidth:'',
+            saveHeight:'',
 
             fontList:[
-                {id: 'Gamja Flower', name:"감자꽃마을"},
-                {id: 'Gaegu', name:"개구쟁이"},
-                {id: 'Gugi', name:"구기"},
+                {id: 'Nanum Gothic', name: "나눔고딕"},
+                {id: 'Gothic A1', name: "고딕AI"},
+                {id: 'Black Han Sans', name: "검은고딕"},
+                {id: 'Nanum Gothic Coding', name: "나눔고딕코딩"},
+                {id: 'Nanum Myeongjo', name: "나눔명조"},
+                {id: 'Song Myung', name: "송명"},
+                {id: 'Gamja Flower', name: "감자꽃마을"},
+                {id: 'Gaegu', name: "개구쟁이"},
+                {id: 'Gugi', name: "구기"},
+                {id: 'Cute Font', name: "귀여운 폰트"},
             ],
             selected:'',
         }

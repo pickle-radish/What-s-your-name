@@ -16,13 +16,13 @@
         </div>
 
         <div :id="`tempDiv`" class="printDiv" v-else>
-            <img :src="imgPath" alt="customImg" :width="`${3.77*100}px`" :height="`${3.77*145}px`" class="imageCard" :id="`tempImgCard`">
+            <img :src="imgPath" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`">
             <drag-it-dude
                 v-for="tag in tags" 
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags"
-                :style="`font-size:${tag.fontSize}px; font-family: ${selectFont} `"
+                :style="`font-size:${tag.fontSize}px; font-family: ${selectFont}; `"
                 >
                 <div :id='tagData.id' >
                     {{tag.value}}
@@ -46,7 +46,7 @@ export default {
     },
     computed: mapGetters(['imgPath', 'saveWidth', 'saveHeight', 'tags', 'selectFont']),
     methods:{
-        ...mapActions(['alignCenter', 'freePosition'])
+        ...mapActions(['alignCenter', 'freePosition', 'moveTag'])
     },
 }
 </script>
