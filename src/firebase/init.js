@@ -2,7 +2,7 @@ import firebase from 'firebase'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAPrOQxDpxKBIDBaes7jU3sHqBbizO-14s",
+  apiKey: process.env.VUE_APP_FIREBASE_KEY,
   authDomain: "easy-name-card.firebaseapp.com",
   databaseURL: "https://easy-name-card.firebaseio.com",
   projectId: "easy-name-card",
