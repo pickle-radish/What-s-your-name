@@ -8,16 +8,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    token:'',
+
     excelData:'',
-    imgId:'',
+    
     imgPath:'',
-    saveWidth:100,
-    saveHeight:145,
-    tags: [{id: 0, name:'', value:'태그1', top:0, fontSize:40}],
-    selectFont: 'Gamja Flower',
-    userImg: '',
+    
+    saveWidth:0,
+    saveHeight:0,
+    selectFont: 'Nanum Gothic',
+    tags: [{id: 0, name:'', value:'태그1', top:0, left:0, fontSize:40}],
+    
   },
   getters:{
+    token: state => state.token,
     excelData : state => state.excelData,
     imgId :state => state.imgId,
     imgPath : state => state.imgPath,
@@ -28,6 +32,7 @@ export default new Vuex.Store({
     userImg: state => state.userImg,
   },
   mutations: {
+    setToken : (state, data) => state.token = data,
     setExcelData : (state, data) => state.excelData = data,
 
     setImgId :(state, data) => state.imgId = data,
@@ -43,15 +48,19 @@ export default new Vuex.Store({
 
     addTag(state){
       if (state.tags.length<5){
-        state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, fontSize:40})
+        state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, left:0, fontSize:40})
       }else{
         alert("태그의 개수는 최대 5개 입니다")
       }
     },
     
     setTagPosition:(state, data) => state.tags[data.i].top = data.top,
+    // setTagPosition(state, data){  
+    //   state.tags[data.idx].top = data.top
+    //   state.tags[data.idx].left = data.left
+    // },
 
-    removeTag : (state, idx) => state.tags.splice(idx, 1),
+    removeTag : (state, idx) => state.tags.length>1 ? state.tags.splice(idx, 1) : state.tags,
 
     setFont : (state, data) => state.selectFont = data,
     
@@ -59,14 +68,15 @@ export default new Vuex.Store({
   },
   actions: {
     readFile({commit}, event) { 
-
-      const file = event
-      // const fileName = file.name
-
-      const reader = new FileReader()
-      // let tmpResult = {}
-      
-      reader.onload = (e) =>{
+      if(event){
+        console.log(event)
+        const file = event
+        // const fileName = file.name
+        
+        const reader = new FileReader()
+        // let tmpResult = {}
+        
+        reader.onload = (e) =>{
           let data = e.target.result
           // data = new Uint8Array(data)
 
@@ -76,8 +86,9 @@ export default new Vuex.Store({
             return row.id=idx
           })
           commit('setExcelData', rows)
+        }
+        reader.readAsArrayBuffer(file)
       }
-      reader.readAsArrayBuffer(file)
     },
     async saveTestFile({state}){
       if (state.excelData.length==0) {
@@ -174,9 +185,13 @@ export default new Vuex.Store({
         element.style.left = "50%"
         element.style.transform = "translate(-50%)"
         
-        commit('setTagPosition', {top:element.style.top, i})
+        commit('setTagPosition', {top:element.style.top, left:element.style.left, i})
       } 
     },
+    // moveTag({commit}, idx){
+    //   const element = document.querySelector("#tag"+this.state.tags[idx].id)
+    //   commit('setTagPosition', {top:element.style.top, left:element.style.left, idx})
+    // },
     inputUserImg({commit}, event){
       let files = event.target.files;
 
