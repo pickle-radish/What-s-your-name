@@ -15,7 +15,14 @@
                         >
                 </v-card>
             </v-col>
-            <v-col cols="3">
+            <v-col cols="3" v-for="(path, idx) in imgPath" :key="idx">
+                <router-link :to="{name:`Custom`, params:{idx}}">
+                    <v-card height="100%">
+                        <img class="tempImg" :src="path" width="100%" height="100%" alt="">
+                    </v-card>
+                </router-link>
+            </v-col>
+            <!-- <v-col cols="3">
                 <router-link to="/custom?name=a">
                     <v-card height="100%">
                         <img class="tempImg" src="@/img/a.jpg" width="100%" height="100%" alt="">
@@ -28,7 +35,7 @@
                         <img class="tempImg" :src="path" width="100%" height="100%" alt="">
                     </v-card>
                 </router-link>
-            </v-col>
+            </v-col> -->
         </v-row>
     </v-container>
 </template>
@@ -41,16 +48,9 @@ import firebase from '@/firebase/init'
 
 export default {
     name: 'SelectTemp',
-
+    
     computed:{
-        ...mapGetters([])
-    },
-
-    data(){
-        return {
-            path:'',
-        }
-
+        ...mapGetters(['imgPath'])
     },
     methods:{
         ...mapActions(['inputUserImg']),
@@ -60,7 +60,7 @@ export default {
             if (FileReader && files && files.length) {
                 let fr = new FileReader();
                 fr.onload = ()=> {
-                    this.$store.commit('setImgPath', fr.result)
+                    this.$store.commit('setUserImg', fr.result)
                 }
                 fr.readAsDataURL(files[0]);
                 router.push(`/custom?customImg=true`)
@@ -70,24 +70,34 @@ export default {
 
         },
         setImagePath(){
-
-            firebase.storage().ref().child('template/b.jpg').getDownloadURL().then((url) => {
-                // `url` is the download URL for 'images/stars.jpg'
-
+            let imageList=[]
+            firebase.firestore().collection('templateImage').get()
+            .then(async snapshot => {
+                if(!snapshot.empty){
+                    snapshot.forEach( doc => {
+                        imageList.push(doc.data().name)
+                    })
+                    for(let i=0; i<imageList.length; i++){
+                         try{
+                            let url = await firebase.storage().ref().child(`template/${imageList[i]}`).getDownloadURL()
+                            this.$store.commit('addPath', url)
+                        }catch(err){
+                            console.log(err)
+                        }
+                    }
+                }
+            })
+            .catch(err=>{
+                console.log(err)
+            })
             
-
-                // Or inserted into an <img> element:
-                this.path = url;
-            }).catch(function(error) {
-                console.log(error)
-            });
-
-            // this.path  = firebase.storage().refFromURL('gs://easy-name-card-47671.appspot.com/template/b.jpg')
         }
 
     },
     created(){
-        this.setImagePath()
+        if (this.imgPath.length==0){
+            this.setImagePath()
+        }
     }
 }
 </script>

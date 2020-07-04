@@ -42,12 +42,6 @@ export default {
     },
     computed: mapGetters(['excelData',]),
     methods:{
-        
-    },
-    created(){
-        if(!this.$route.query.customImg){
-            this.$store.commit('setImgPath', require(`@/img/${this.$route.query.name}.jpg`))
-        }
     },
 }
 </script>

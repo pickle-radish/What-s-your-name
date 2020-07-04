@@ -12,7 +12,8 @@ export default new Vuex.Store({
 
     excelData:'',
     
-    imgPath:'',
+    imgPath:[],
+    userImg:'',
     
     saveWidth:0,
     saveHeight:0,
@@ -23,25 +24,19 @@ export default new Vuex.Store({
   getters:{
     token: state => state.token,
     excelData : state => state.excelData,
-    // imgId :state => state.imgId,
     imgPath : state => state.imgPath,
+    userImg: state => state.userImg,
     saveWidth : state => state.saveWidth,
     saveHeight : state => state.saveHeight,
     tags: state => state.tags,
     selectFont: state => state.selectFont,
-    // userImg: state => state.userImg,
   },
   mutations: {
     setToken : (state, data) => state.token = data,
     setExcelData : (state, data) => state.excelData = data,
 
-    // setImgId :(state, data) => state.imgId = data,
-
-    setImgPath : (state, data) => state.imgPath = data,
-    // setImgPath(state, data) {
-    //   console.log("setImg Path", data)
-    //   state.imgPath = data
-    // },
+    addPath : (state, data) => state.imgPath.push(data),
+    setUserImg : (state, data) => state.userImg = data,
    
     setSaveWidth : (state, data) => state.saveWidth = data,
     setSaveHeight : (state, data) => state.saveHeight = data,
@@ -65,7 +60,6 @@ export default new Vuex.Store({
     setFont : (state, data) => state.selectFont = data,
     setFontWeight : (state, data) => state.tags[data.idx].fontWeight = data.weight,
     
-    // setUserImg : (state, data) => state.userImg = data
   },
   actions: {
     readFile({commit}, event) { 
