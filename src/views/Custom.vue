@@ -1,5 +1,7 @@
 <template>
-    <div style="margin: 0 50px">
+    <!-- <div style="margin: 0 50px"> -->
+    <v-container>
+
         <v-row style="height:100%;">
             <v-col cols="9">
                 <v-row style="height:100%" align="center" >   
@@ -15,7 +17,8 @@
                 <customMenu />
             </v-col>
         </v-row>
-    </div>
+    </v-container>
+    <!-- </div> -->
 </template>
 
 <script>
@@ -37,7 +40,7 @@ export default {
         ImgCard,
         customMenu
     },
-    computed: mapGetters(['excelData', 'userImg']),
+    computed: mapGetters(['excelData',]),
     methods:{
         
     },

@@ -6,8 +6,8 @@
                 <v-row >
                     <v-col cols="12">
                         <div style="margin-bottom: 20px; display:flex; justify-content: space-around">
-                            <v-btn color="#DAE2F0" @click="alignCenter">가운데정렬</v-btn>
-                            <v-btn color="#DAE2F0" @click="$store.commit('addTag')">태그 추가</v-btn>
+                            <v-btn :color="btnColor" rounded @click="alignCenter">가운데정렬</v-btn>
+                            <v-btn :color="btnColor" rounded @click="$store.commit('addTag')">태그 추가</v-btn>
                         </div>
                         <div>
                             <v-select :items="fontList" label="글꼴 선택" item-value='id' item-text="name" :value="selectFont" @input="setFont"></v-select>
@@ -15,7 +15,7 @@
                         <div id="tagBox">
                             <div class="inputTags" v-for="(tag, idx) in tags" :key="tag.id" >
                                 <v-row dense no-gutters>
-                                        <v-col cols="3">
+                                        <!-- <v-col cols="3">
                                             <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="tag" v-model="tag.name" autocomplete="off"></v-text-field>
                                         </v-col>
                                         <v-col cols="6"> 
@@ -23,8 +23,43 @@
                                         </v-col>
                                         <v-col cols="2">
                                             <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="font" type="number" v-model="tag.fontSize" autocomplete="off"></v-text-field>
+                                        </v-col> -->
+                                        <v-col cols="11">
+                                            <div style="display:flex; justify-content: space-around">
+                                                <v-text-field
+                                                    class="pa-0 "
+                                                    hide-details
+                                                    dense
+                                                    style="padding:0px"
+                                                    label="tag"
+                                                    v-model="tag.name"
+                                                    autocomplete="off"
+                                                >
+                                                </v-text-field>
+                                                <v-text-field
+                                                    class="pa-0 "
+                                                    hide-details
+                                                    dense
+                                                    style="padding:0px"
+                                                    label="font"
+                                                    type="number"
+                                                    v-model="tag.fontSize"
+                                                    autocomplete="off"
+                                                >
+                                                </v-text-field>
+                                                <v-select 
+                                                    hide_details dense 
+                                                    :items="weightList"
+                                                    label="굵기"
+                                                    :value="fontWeight"
+                                                    @input="setFontWeight"
+                                                >
+                                                </v-select>
+                                            </div>
+                                            <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="value" v-model="tag.value" autocomplete="off"></v-text-field>
+                                               
                                         </v-col>
-                                        <v-col cols="1">
+                                        <v-col cols="1" style="display:flex; align-items: center">
                                             <v-btn class="mx-2" fab dark x-small outlined color="error" @click="$store.commit('removeTag', idx)">
                                                 <v-icon >mdi-minus</v-icon>
                                             </v-btn>
@@ -37,13 +72,13 @@
                     <v-col cols="12" style="display:flex; justify-content: space-around ">
                         <v-text-field label="가로길이" dense style="padding:3px" v-model="saveWidth" @keypress.enter="changeSize({saveWidth, saveHeight})" autocomplete="off"></v-text-field>
                         <v-text-field label="세로길이" dense style="padding:3px" v-model="saveHeight" @keypress.enter="changeSize({saveWidth, saveHeight})" autocomplete="off"></v-text-field>
-                        <v-btn color="#DAE2F0" small @click="changeSize({saveWidth, saveHeight})" style="margin-top:5px">변경</v-btn>
+                        <v-btn :color="btnColor" rounded small @click="changeSize({saveWidth, saveHeight})" style="margin-top:5px">변경</v-btn>
                     </v-col>
 
                     <v-col>
                         <v-file-input label="File input" accept=".xlsx" @change="readFile"></v-file-input>
-                        <v-btn color="#DAE2F0" large width="200" @click="saveTestFile" style="margin-top:10px">Test 파일 저장하기</v-btn>
-                        <v-btn color="#DAE2F0" large width="200" @click="savePdf" style="margin-top:10px">PDF로 저장하기</v-btn>
+                        <v-btn :color="btnColor" rounded large width="200" @click="saveTestFile" style="margin-top:10px">Test 파일 저장하기</v-btn>
+                        <v-btn :color="btnColor" rounded large width="200" @click="savePdf" style="margin-top:10px">PDF로 저장하기</v-btn>
                     </v-col>
                     
                 </v-row>
@@ -63,6 +98,8 @@ export default {
             saveWidth:'',
             saveHeight:'',
 
+            btnColor: '#F3F1F6',
+
             fontList:[
                 {id: 'Nanum Gothic', name: "나눔고딕"},
                 {id: 'Gothic A1', name: "고딕AI"},
@@ -75,11 +112,11 @@ export default {
                 {id: 'Gugi', name: "구기"},
                 {id: 'Cute Font', name: "귀여운 폰트"},
             ],
-            selected:'',
-        }
+            weightList: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+}
     },
     computed:{
-        ...mapGetters(['tags', 'fileName', 'selectFont',]),
+        ...mapGetters(['tags', 'fileName', 'selectFont', 'fontWeight']),
     },
     methods:{
         ...mapActions(['readFile', 'savePdf', 'saveTestFile', 'changeSize', 'alignCenter']),
@@ -88,6 +125,9 @@ export default {
         },
         setFont(val){
             this.$store.commit('setFont', val)
+        },
+        setFontWeight(val){
+            this.$store.commit('setFontWeight', val)
         }
     }
 }
@@ -103,6 +143,4 @@ export default {
     .inputTags{
         padding-top:10px;
     }
-
-
 </style>

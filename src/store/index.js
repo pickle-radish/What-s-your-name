@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    token:'',
+    token: 'logout',
 
     excelData:'',
     
@@ -17,6 +17,7 @@ export default new Vuex.Store({
     saveWidth:0,
     saveHeight:0,
     selectFont: 'Nanum Gothic',
+    fontWeight: 300,
     tags: [{id: 0, name:'', value:'태그1', top:0, left:0, fontSize:40}],
     
   },
@@ -29,7 +30,8 @@ export default new Vuex.Store({
     saveHeight : state => state.saveHeight,
     tags: state => state.tags,
     selectFont: state => state.selectFont,
-    userImg: state => state.userImg,
+    fontWeight: state=> state.fontWeight,
+    // userImg: state => state.userImg,
   },
   mutations: {
     setToken : (state, data) => state.token = data,
@@ -63,8 +65,9 @@ export default new Vuex.Store({
     removeTag : (state, idx) => state.tags.length>1 ? state.tags.splice(idx, 1) : state.tags,
 
     setFont : (state, data) => state.selectFont = data,
+    setFontWeight : (state, data) => state.selectFontWeight = data,
     
-    setUserImg : (state, data) => state.userImg = data
+    // setUserImg : (state, data) => state.userImg = data
   },
   actions: {
     readFile({commit}, event) { 

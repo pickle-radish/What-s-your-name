@@ -42,7 +42,7 @@ export default {
     name: 'SelectTemp',
 
     computed:{
-        ...mapGetters(['userImg'])
+        ...mapGetters([])
     },
     methods:{
         ...mapActions(['inputUserImg']),

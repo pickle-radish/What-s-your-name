@@ -35,7 +35,7 @@ export default {
     position: absolute;
     width: 100%;
     height: 100vh;
-    background-color: lightcyan;
+    background-color: Lavender;
   } 
    #backgroundCover{
     width: 100%;
