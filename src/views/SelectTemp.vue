@@ -25,7 +25,7 @@
             <v-col cols="3">
                 <router-link to="/custom?name=b">
                     <v-card height="100%">
-                        <img class="tempImg" src="@/img/b.jpg" width="100%" height="100%" alt="">
+                        <img class="tempImg" :src="path" width="100%" height="100%" alt="">
                     </v-card>
                 </router-link>
             </v-col>
@@ -36,6 +36,7 @@
 <script>
 import {mapActions, mapGetters} from 'vuex'
 import router from '@/router/index'
+import firebase from '@/firebase/init'
 
 
 export default {
@@ -43,6 +44,13 @@ export default {
 
     computed:{
         ...mapGetters([])
+    },
+
+    data(){
+        return {
+            path:'',
+        }
+
     },
     methods:{
         ...mapActions(['inputUserImg']),
@@ -60,7 +68,26 @@ export default {
                 alert("이미지 업로드에 실패했습니다")
             }
 
+        },
+        setImagePath(){
+
+            firebase.storage().ref().child('template/b.jpg').getDownloadURL().then((url) => {
+                // `url` is the download URL for 'images/stars.jpg'
+
+            
+
+                // Or inserted into an <img> element:
+                this.path = url;
+            }).catch(function(error) {
+                console.log(error)
+            });
+
+            // this.path  = firebase.storage().refFromURL('gs://easy-name-card-47671.appspot.com/template/b.jpg')
         }
+
+    },
+    created(){
+        this.setImagePath()
     }
 }
 </script>

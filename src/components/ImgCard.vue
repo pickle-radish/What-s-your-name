@@ -7,7 +7,7 @@
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags" 
-                :style="`top:${tag.top}; left: 50%; transform:translate(-50%); font-size:${tag.fontSize}px; font-family: ${selectFont}`"
+                :style="`top:${tag.top}; left: 50%; transform:translate(-50%); font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}`"
                 >
                 <div>
                     {{tagData[tag.name]}}

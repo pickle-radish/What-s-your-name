@@ -17,13 +17,13 @@ export default new Vuex.Store({
     saveWidth:0,
     saveHeight:0,
     selectFont: 'Nanum Gothic',
-    tags: [{id: 0, name:'', value:'태그1', top:0, left:0, fontSize:40, fontWeight: ''}],
+    tags: [{id: 0, name:'', value:'태그1', top:0, left:0, fontSize:40, fontWeight: 300}],
     
   },
   getters:{
     token: state => state.token,
     excelData : state => state.excelData,
-    imgId :state => state.imgId,
+    // imgId :state => state.imgId,
     imgPath : state => state.imgPath,
     saveWidth : state => state.saveWidth,
     saveHeight : state => state.saveHeight,
@@ -35,7 +35,7 @@ export default new Vuex.Store({
     setToken : (state, data) => state.token = data,
     setExcelData : (state, data) => state.excelData = data,
 
-    setImgId :(state, data) => state.imgId = data,
+    // setImgId :(state, data) => state.imgId = data,
 
     setImgPath : (state, data) => state.imgPath = data,
     // setImgPath(state, data) {
@@ -48,7 +48,7 @@ export default new Vuex.Store({
 
     addTag(state){
       if (state.tags.length<5){
-        state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, left:0, fontSize:40, fontWeight:''})
+        state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, left:0, fontSize:40, fontWeight:300})
       }else{
         alert("태그의 개수는 최대 5개 입니다")
       }
