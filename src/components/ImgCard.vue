@@ -22,7 +22,7 @@
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags"
-                :style="`font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${fontWeight} `"
+                :style="`font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight} `"
                 >
                 <div :id='tagData.id' >
                     {{tag.value}}
@@ -44,7 +44,7 @@ export default {
     props:{
         tagData: Object,
     },
-    computed: mapGetters(['imgPath', 'saveWidth', 'saveHeight', 'tags', 'selectFont', 'fontWeight']),
+    computed: mapGetters(['imgPath', 'saveWidth', 'saveHeight', 'tags', 'selectFont']),
     methods:{
         ...mapActions(['alignCenter', 'freePosition', 'moveTag'])
     },

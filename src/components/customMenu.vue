@@ -24,7 +24,7 @@
                                         <v-col cols="2">
                                             <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="font" type="number" v-model="tag.fontSize" autocomplete="off"></v-text-field>
                                         </v-col> -->
-                                        <v-col cols="11">
+                                        <v-col cols="9">
                                             <div style="display:flex; justify-content: space-around">
                                                 <v-text-field
                                                     class="pa-0 "
@@ -41,17 +41,18 @@
                                                     hide-details
                                                     dense
                                                     style="padding:0px"
-                                                    label="font"
+                                                    label="크기"
                                                     type="number"
                                                     v-model="tag.fontSize"
                                                     autocomplete="off"
                                                 >
                                                 </v-text-field>
                                                 <v-select 
-                                                    hide_details dense 
+                                                    hide_details
+                                                    dense 
                                                     :items="weightList"
                                                     label="굵기"
-                                                    :value="fontWeight"
+                                                    v-model="selectWeight"
                                                     @input="setFontWeight"
                                                 >
                                                 </v-select>
@@ -59,7 +60,7 @@
                                             <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="value" v-model="tag.value" autocomplete="off"></v-text-field>
                                                
                                         </v-col>
-                                        <v-col cols="1" style="display:flex; align-items: center">
+                                        <v-col style="display:flex; align-items: center; justify-content: flex-end;">
                                             <v-btn class="mx-2" fab dark x-small outlined color="error" @click="$store.commit('removeTag', idx)">
                                                 <v-icon >mdi-minus</v-icon>
                                             </v-btn>
@@ -113,10 +114,11 @@ export default {
                 {id: 'Cute Font', name: "귀여운 폰트"},
             ],
             weightList: [100, 200, 300, 400, 500, 600, 700, 800, 900],
-}
+            selectWeight:300
+        }
     },
     computed:{
-        ...mapGetters(['tags', 'fileName', 'selectFont', 'fontWeight']),
+        ...mapGetters(['tags', 'fileName', 'selectFont']),
     },
     methods:{
         ...mapActions(['readFile', 'savePdf', 'saveTestFile', 'changeSize', 'alignCenter']),
@@ -126,8 +128,8 @@ export default {
         setFont(val){
             this.$store.commit('setFont', val)
         },
-        setFontWeight(val){
-            this.$store.commit('setFontWeight', val)
+        setFontWeight(idx){
+            this.$store.commit('setFontWeight', {weight: this.selectWeight, idx})
         }
     }
 }
@@ -138,9 +140,11 @@ export default {
         background-color: rgba(0,0,0,0);
     }
     #tagBox{
-        height:250px;
+        height:400px;
+        overflow-y: scroll;
     }
     .inputTags{
         padding-top:10px;
+        margin-bottom: 20px;
     }
 </style>

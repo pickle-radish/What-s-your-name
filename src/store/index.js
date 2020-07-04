@@ -17,8 +17,7 @@ export default new Vuex.Store({
     saveWidth:0,
     saveHeight:0,
     selectFont: 'Nanum Gothic',
-    fontWeight: 300,
-    tags: [{id: 0, name:'', value:'태그1', top:0, left:0, fontSize:40}],
+    tags: [{id: 0, name:'', value:'태그1', top:0, left:0, fontSize:40, fontWeight: ''}],
     
   },
   getters:{
@@ -30,7 +29,6 @@ export default new Vuex.Store({
     saveHeight : state => state.saveHeight,
     tags: state => state.tags,
     selectFont: state => state.selectFont,
-    fontWeight: state=> state.fontWeight,
     // userImg: state => state.userImg,
   },
   mutations: {
@@ -50,7 +48,7 @@ export default new Vuex.Store({
 
     addTag(state){
       if (state.tags.length<5){
-        state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, left:0, fontSize:40})
+        state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, left:0, fontSize:40, fontWeight:''})
       }else{
         alert("태그의 개수는 최대 5개 입니다")
       }
@@ -65,7 +63,7 @@ export default new Vuex.Store({
     removeTag : (state, idx) => state.tags.length>1 ? state.tags.splice(idx, 1) : state.tags,
 
     setFont : (state, data) => state.selectFont = data,
-    setFontWeight : (state, data) => state.selectFontWeight = data,
+    setFontWeight : (state, data) => state.tags[data.idx].fontWeight = data.weight,
     
     // setUserImg : (state, data) => state.userImg = data
   },
