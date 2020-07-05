@@ -16,7 +16,8 @@
         </div>
 
         <div :id="`tempDiv`" class="printDiv" v-else>
-            <img :src="imgPath[$route.params.idx]" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`">
+            <img :src="imgPath[$route.params.idx]" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`" v-if="!$route.params.custom">
+            <img :src="userImg" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`" v-else>
             <drag-it-dude
                 v-for="tag in tags" 
                 :key="tag.id" 
@@ -44,17 +45,11 @@ export default {
     props:{
         tagData: Object,
     },
-    computed: mapGetters(['imgPath', 'saveWidth', 'saveHeight', 'tags', 'selectFont']),
+    computed: mapGetters(['imgPath', 'saveWidth', 'saveHeight', 'tags', 'selectFont', 'userImg']),
     methods:{
         ...mapActions(['alignCenter', 'freePosition', 'moveTag']),
-        printImgPath(){
-            console.log(this.imgPath[0])
-            console.log(this.imgPath[1])
-        }
+      
     },
-    created(){
-        this.printImgPath()
-    }
     
 }
 </script>

@@ -64,7 +64,6 @@ export default new Vuex.Store({
   actions: {
     readFile({commit}, event) { 
       if(event){
-        console.log(event)
         const file = event
         // const fileName = file.name
         
