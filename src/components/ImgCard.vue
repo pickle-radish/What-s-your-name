@@ -1,7 +1,7 @@
 <template>
     <div id="imgCard">
         <div :id="`card${tagData.id}`" class="printDiv" v-if="tagData.id != undefined">
-            <img :src="imgPath[$route.params.idx]" alt="customImg" class="imageCard" :id="`imgCard${tagData.id}`">
+            <img src="@/img/b.jpg" alt="customImg" class="imageCard" :id="`imgCard${tagData.id}`">
             <drag-it-dude
                 v-for="tag in tags" 
                 :key="tag.id" 
@@ -16,7 +16,7 @@
         </div>
 
         <div :id="`tempDiv`" class="printDiv" v-else>
-            <img :src="imgPath[$route.params.idx]" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`">
+            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FvAhux%2FbtqFnhQo20n%2FY7AghDFkpJQKZRlSHcQHBk%2Fimg.jpg" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`">
             <drag-it-dude
                 v-for="tag in tags" 
                 :key="tag.id" 
@@ -46,8 +46,16 @@ export default {
     },
     computed: mapGetters(['imgPath', 'saveWidth', 'saveHeight', 'tags', 'selectFont']),
     methods:{
-        ...mapActions(['alignCenter', 'freePosition', 'moveTag'])
+        ...mapActions(['alignCenter', 'freePosition', 'moveTag']),
+        printImgPath(){
+            console.log(this.imgPath[0])
+            console.log(this.imgPath[1])
+        }
     },
+    created(){
+        this.printImgPath()
+    }
+    
 }
 </script>
 

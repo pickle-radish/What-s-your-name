@@ -1,5 +1,5 @@
 <template>
-    <v-card  height="100%" class="text-center" id="toolBox">
+    <v-card rounded height="100%" class="text-center">
         <v-row style="boder: 1px solid;">
             <v-col cols="1"></v-col>
             <v-col cols="10">
@@ -56,6 +56,7 @@
                                                     @input="setFontWeight(idx)"
                                                 >
                                                 </v-select>
+
                                             </div>
                                             <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="value" v-model="tag.value" autocomplete="off"></v-text-field>
                                                
@@ -82,12 +83,13 @@
                         <!-- <v-btn color="#9ACD32" rounded large width="95%" @click="savePdf" style="margin-top:10px">이름표 저장</v-btn> -->
                         
                         <v-btn :color="btnColor" rounded width="200" @click="saveCustom" class="saveBtn" id="saveCutom">이름표 양식 저장</v-btn>
-                        <v-btn color="#4169E1" rounded width="200" @click="saveTestFile" class="saveBtn">
-                            <div class="pdfSave">Test저장</div>
+                        <v-btn color="#4169E1" rounded outlined width="200" @click="saveTestFile" class="saveBtn">
+                            <v-icon left>mdi-content-save</v-icon>Test
                         </v-btn>
-                        <v-btn color="#FF7F50" rounded width="200" @click="savePdf" class="saveBtn">
-                            <div class="pdfSave">PDF저장</div>
+                        <v-btn color="#FF7F50" rounded outlined width="200" @click="savePdf" class="saveBtn">
+                            <v-icon left>mdi-content-save</v-icon>PDF
                         </v-btn>
+                        
                     </v-col>
                     
                 </v-row>

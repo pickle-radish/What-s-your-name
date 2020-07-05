@@ -95,8 +95,8 @@ export default new Vuex.Store({
         // const printArea = document.querySelector("#tempCard");
         // const printAreaImg = document.querySelector("#tempImgCard");
         
-        const printArea = document.querySelector("#card0")
-        const printAreaImg = document.querySelector("#imgCard0")
+        const printArea = document.querySelector("#tempDiv")
+        const printAreaImg = document.querySelector("#tempImgCard")
 
         printAreaImg.style.width= `${3.77 * state.saveWidth}px`
         printAreaImg.style.height= `${3.77 * state.saveHeight}px`
