@@ -16,7 +16,7 @@
         </div>
 
         <div :id="`tempDiv`" class="printDiv" v-else>
-            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FvAhux%2FbtqFnhQo20n%2FY7AghDFkpJQKZRlSHcQHBk%2Fimg.jpg" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`">
+            <img :src="imgPath[$route.params.idx]" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`">
             <drag-it-dude
                 v-for="tag in tags" 
                 :key="tag.id" 
