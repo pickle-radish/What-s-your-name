@@ -122,6 +122,7 @@ export default {
                 {id: 'Gaegu', name: "개구쟁이"},
                 {id: 'Gugi', name: "구기"},
                 {id: 'Cute Font', name: "귀여운 폰트"},
+                {id: 'Do Hyeon', name: '도현'}
             ],
             weightList: [100, 200, 300, 400, 500, 600, 700, 800, 900],
             selectWeight:[300,300,300,300,300]
@@ -162,7 +163,7 @@ export default {
         background-color: rgba(0,0,0,0);
     }
     #tagBox{
-        height:400px;
+        height:380px;
         overflow-y: scroll;
     }
     .inputTags{

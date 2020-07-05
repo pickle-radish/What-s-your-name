@@ -16,7 +16,7 @@
                 </v-card>
             </v-col>
             <v-col cols="3" v-for="(path, idx) in imgPath" :key="idx">
-                <router-link :to="{name:`Custom`, params:{idx}}">
+                <router-link :to="{name:`Custom`, params:{idx, custom:false}}">
                     <v-card height="100%">
                         <img class="tempImg" :src="path" width="100%" height="100%" alt="">
                     </v-card>
@@ -60,10 +60,20 @@ export default {
             if (FileReader && files && files.length) {
                 let fr = new FileReader();
                 fr.onload = ()=> {
+                    // console.log(fr.result)
                     this.$store.commit('setUserImg', fr.result)
+                    // firebase.firestore().collection('user')
+                    //     .add({
+                    //         name: new Date().getTime(),
+                    //         image: fr.result
+                    //     })
+                    //     .catch(err=>{
+                    //         console.log(err)
+                    //     })
                 }
                 fr.readAsDataURL(files[0]);
-                router.push(`/custom?customImg=true`)
+                // console.log(new Date().getTime())
+                router.push({name:`Custom`, params:{idx:1, custom:true}})
             }else{
                 alert("이미지 업로드에 실패했습니다")
             }
@@ -77,6 +87,7 @@ export default {
                     snapshot.forEach( doc => {
                         imageList.push(doc.data().name)
                     })
+                    console.log(imageList)
                     for(let i=0; i<imageList.length; i++){
                          try{
                             let url = await firebase.storage().ref().child(`template/${imageList[i]}`).getDownloadURL()
