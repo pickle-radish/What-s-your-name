@@ -25,8 +25,9 @@ export default {
     },
     methods: {
         login(){
+            console.log(process.env.VUE_APP_FIREBASE_KEY)
             // 구글 인증 기능 추가
-            console.log(firebase)
+            // console.log(firebase)
             let provider = new firebase.auth.GoogleAuthProvider();
             let token
             // 인증하기
