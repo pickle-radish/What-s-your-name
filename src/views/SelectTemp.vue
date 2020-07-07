@@ -86,19 +86,20 @@ export default {
                 if(!snapshot.empty){
                     snapshot.forEach( doc => {
                         imageList.push(doc.data().name)
+                        // require(`@/img/${this.imgId}.jpg`)
                     })
                     console.log(imageList)
+
                     for(let i=0; i<imageList.length; i++){
-                         try{
-                            let url = await firebase.storage().ref().child(`template/${imageList[i]}`).getDownloadURL()
-                            this.$store.commit('addPath', url)
-                        }catch(err){
-                            console.log(err)
-                        }
+                      
+                        // firestorage 에서 이미지 받아오기
+                        // let url = await firebase.storage().ref().child(`template/${imageList[i]}`).getDownloadURL()
+                        this.$store.commit('addPath', require(`@/img/${imageList[i]}`))
                     }
                 }
             })
             .catch(err=>{
+                console.log("firebase error")
                 console.log(err)
             })
             

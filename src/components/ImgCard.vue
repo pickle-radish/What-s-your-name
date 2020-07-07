@@ -1,7 +1,7 @@
 <template>
     <div id="imgCard">
         <div :id="`card${tagData.id}`" class="printDiv" v-if="tagData.id != undefined">
-            <img src="@/img/b.jpg" alt="customImg" class="imageCard" :id="`imgCard${tagData.id}`">
+            <img :src="imgPath[$route.params.idx]" alt="customImg" class="imageCard" :id="`imgCard${tagData.id}`">
             <drag-it-dude
                 v-for="tag in tags" 
                 :key="tag.id" 
@@ -30,7 +30,7 @@
                 </div>
             </drag-it-dude>
         </div>
-    </div >
+    </div>
 </template>
 
 <script>
@@ -48,7 +48,6 @@ export default {
     computed: mapGetters(['imgPath', 'saveWidth', 'saveHeight', 'tags', 'selectFont', 'userImg']),
     methods:{
         ...mapActions(['alignCenter', 'freePosition', 'moveTag']),
-      
     },
     
 }
