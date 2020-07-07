@@ -33,12 +33,12 @@ export default {
             firebase.auth().signInWithPopup(provider).then((result) => {
                 // This gives you a Google Access Token. You can use it to access the Google API.
                 token = result.credential.accessToken;
-                console.log(token)
+                // console.log(token)
                 
                 this.$store.commit('setToken', token)
                 // The signed-in user info.
                 let user = result.user;
-                console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+                // console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
 
                 firebase.firestore().collection('user').where('email', '==', user.email).get()
                 .then(snapshot => {
