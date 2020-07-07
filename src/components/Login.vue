@@ -25,7 +25,6 @@ export default {
     },
     methods: {
         login(){
-            console.log(process.env.VUE_APP_FIREBASE_KEY)
             // 구글 인증 기능 추가
             // console.log(firebase)
             let provider = new firebase.auth.GoogleAuthProvider();
@@ -43,7 +42,6 @@ export default {
 
                 firebase.firestore().collection('user').where('email', '==', user.email).get()
                 .then(snapshot => {
-                    console.log(snapshot)
                     if(!snapshot.empty){
                         snapshot.forEach(doc => {
                         
