@@ -24,6 +24,8 @@ export default new Vuex.Store({
     saveHeight:0,
     selectFont: 'Nanum Gothic',
     tags: [{id: 0, name:'', value:'태그1', top:0, left:0, fontSize:40, fontWeight: 300}],
+
+    saving: 0,
     
   },
   getters:{
@@ -37,6 +39,8 @@ export default new Vuex.Store({
     saveHeight : state => state.saveHeight,
     tags: state => state.tags,
     selectFont: state => state.selectFont,
+
+    saving: state=> state.saving,
   },
   mutations: {
     setToken : (state, data) => state.token = data,
@@ -66,6 +70,17 @@ export default new Vuex.Store({
 
     setFont : (state, data) => state.selectFont = data,
     setFontWeight : (state, data) => state.tags[data.idx].fontWeight = data.weight,
+
+    saving (state, data){
+      console.log("saving",state.saving)
+      console.log("data",data)
+      if(state.saving >= 100 || data == 0){
+        state.saving = 0
+      }else{
+        state.saving = data
+      }
+    
+    } 
     
   },
   actions: {
@@ -120,12 +135,13 @@ export default new Vuex.Store({
         pdf.save('saved.pdf');
       }
     },
-    async savePdf({state}) {
+    async savePdf({state, commit}) {
       if (state.excelData.length==0) {
         alert("엑셀 파일을 넣어주세요")
       }else if(!state.saveWidth || !state.saveHeight){
         alert("가로 세로 크기를 입력해 주세요")
       }else{
+        
         const pdf = new jsPDF('p', 'mm', 'a4');
         
         for(let i=0; i<state.excelData.length; i++){
@@ -160,13 +176,15 @@ export default new Vuex.Store({
                 default:
                     break;    
             }
+            console.log((state.saving + (100 /state.excelData.length )))
+            commit('saving', (state.saving + (100 /state.excelData.length )))
           }catch (err) {
             console.error(err)
           }
-            
+          
         }
         pdf.save('saved.pdf');
-        
+        commit('saving', 0)
       }
     },
     changeSize({commit}, data){

@@ -86,8 +86,10 @@
                         <v-btn color="#4169E1" rounded outlined width="200" @click="saveTestFile" class="saveBtn">
                             <v-icon left>mdi-content-save</v-icon>Test
                         </v-btn>
-                        <v-btn color="#FF7F50" rounded outlined width="200" @click="savePdf" class="saveBtn">
+                        <v-btn color="#FF7F50" rounded outlined width="200" @click="savePdf" class="saveBtn" style="position:relative">
                             <v-icon left>mdi-content-save</v-icon>PDF
+                            <!-- <v-text-field color="success" loading disabled style="position: absolute;" v-if="saving"></v-text-field>-->
+                            <v-progress-linear :value="saving" style="position: absolute; top: 110%" v-if="saving != 0"></v-progress-linear>
                         </v-btn>
                         
                     </v-col>
@@ -129,7 +131,7 @@ export default {
         }
     },
     computed:{
-        ...mapGetters(['tags', 'fileName', 'selectFont', 'token', 'imgPath', 'isLoggedIn']),
+        ...mapGetters(['tags', 'fileName', 'selectFont', 'token', 'imgPath', 'isLoggedIn', 'saving']),
     },
     methods:{
         ...mapActions(['readFile', 'savePdf', 'saveTestFile', 'changeSize', 'alignCenter', ]),
