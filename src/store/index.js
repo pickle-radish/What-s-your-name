@@ -49,8 +49,8 @@ export default new Vuex.Store({
     addPath : (state, data) => state.imgPath.push(data),
     setUserImg : (state, data) => state.userImg = data,
    
-    setSaveWidth : (state, data) => state.saveWidth = data,
-    setSaveHeight : (state, data) => state.saveHeight = data,
+    setSaveWidth : (state, data) => state.saveWidth = parseInt(data),
+    setSaveHeight : (state, data) => state.saveHeight = parseInt(data),
 
     addTag(state){
       if (state.tags.length<5){
@@ -72,8 +72,6 @@ export default new Vuex.Store({
     setFontWeight : (state, data) => state.tags[data.idx].fontWeight = data.weight,
 
     saving (state, data){
-      console.log("saving",state.saving)
-      console.log("data",data)
       if(state.saving >= 100 || data == 0){
         state.saving = 0
       }else{
@@ -141,7 +139,9 @@ export default new Vuex.Store({
       }else if(!state.saveWidth || !state.saveHeight){
         alert("가로 세로 크기를 입력해 주세요")
       }else{
-        
+        let width = 0
+        let height = 0
+
         const pdf = new jsPDF('p', 'mm', 'a4');
         
         for(let i=0; i<state.excelData.length; i++){
@@ -157,26 +157,28 @@ export default new Vuex.Store({
             const canvas = await html2canvas(printArea)
 
             const dataURL = canvas.toDataURL();
-            switch(i%4){
-                case 0:
-                    pdf.addImage(dataURL, 'JPEG', 5,5); 
-                    break;
-                case 1:
-                    pdf.addImage(dataURL, 'JPEG', 105,5); 
-                    break;
-                case 2:
-                    pdf.addImage(dataURL, 'JPEG', 5, 148.5); 
-                    break;
-                case 3:
-                    pdf.addImage(dataURL, 'JPEG', 105, 148.5); 
-                    if(i+1 !== state.excelData.length){
-                        pdf.addPage();
-                    }
-                    break;
-                default:
-                    break;    
+
+            if(width + state.saveWidth <=200){
+              if(height + state.saveHeight <= 290){
+                pdf.addImage(dataURL, 'JPEG', 5+width, 5+height)
+                width = width + state.saveWidth
+                // height = state.saveHeight
+              }else{
+                height = 0
+              }
+            }else{
+              height = height + state.saveHeight
+              if(height + state.saveHeight <= 287){
+                pdf.addImage(dataURL, 'JPEG', 5, 5+height)
+                width = state.saveWidth
+
+              }else{
+                pdf.addPage()
+                pdf.addImage(dataURL, 'JPEG', 5, 5)
+                width = state.saveWidth
+                height = 0
+              }
             }
-            console.log((state.saving + (100 /state.excelData.length )))
             commit('saving', (state.saving + (100 /state.excelData.length )))
           }catch (err) {
             console.error(err)
