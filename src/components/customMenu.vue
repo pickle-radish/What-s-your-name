@@ -89,7 +89,7 @@
                         <v-btn color="#FF7F50" rounded outlined width="200" @click="savePdf" class="saveBtn" style="position:relative">
                             <v-icon left>mdi-content-save</v-icon>PDF
                             <!-- <v-text-field color="success" loading disabled style="position: absolute;" v-if="saving"></v-text-field>-->
-                            <v-progress-linear :value="saving" style="position: absolute; top: 110%" v-if="saving != 0"></v-progress-linear>
+                            <v-progress-linear :value="saving" rounded color="red lighten-2" style="position: absolute; top: 110%" v-if="saving != 0"></v-progress-linear>
                         </v-btn>
                         
                     </v-col>
