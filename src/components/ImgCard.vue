@@ -1,7 +1,8 @@
 <template>
     <div id="imgCard">
         <div :id="`card${tagData.id}`" class="printDiv" v-if="tagData.id != undefined">
-            <img :src="imgPath[$route.params.idx]" alt="customImg" class="imageCard" :id="`imgCard${tagData.id}`">
+            <img :src="imgPath[$route.params.idx]" alt="customImg" class="imageCard" :id="`imgCard${tagData.id}`" v-if="!$route.params.custom">
+            <img :src="userImg" alt="customImg" class="imageCard" :id="`imgCard${tagData.id}`" v-else>
             <drag-it-dude
                 v-for="tag in tags" 
                 :key="tag.id" 

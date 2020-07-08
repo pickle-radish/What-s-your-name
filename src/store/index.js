@@ -188,13 +188,18 @@ export default new Vuex.Store({
       }
     },
     changeSize({commit}, data){
-      commit('setSaveWidth',data.saveWidth)
-      commit('setSaveHeight',data.saveHeight)
-      const printAreaImg = document.querySelector("#tempImgCard");
-      
-      printAreaImg.style.width= `${3.77 * data.saveWidth}px`
-      printAreaImg.style.height= `${3.77 * data.saveHeight}px`
+      if(data.saveHeight <= 200 && data.saveWidth <= 200){
 
+        commit('setSaveWidth',data.saveWidth)
+        commit('setSaveHeight',data.saveHeight)
+        const printAreaImg = document.querySelector("#tempImgCard");
+        
+        printAreaImg.style.width= `${3.77 * data.saveWidth}px`
+        printAreaImg.style.height= `${3.77 * data.saveHeight}px`
+        
+      }else{
+        alert("가로세로는 최대 200(mm)까지 입력이 가능합니다")
+      }
       // dispatch('alignCenter')
 
     },
