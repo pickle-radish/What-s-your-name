@@ -129,7 +129,7 @@ export default {
         }
     },
     computed:{
-        ...mapGetters(['tags', 'fileName', 'selectFont', 'token', 'imgPath', '']),
+        ...mapGetters(['tags', 'fileName', 'selectFont', 'token', 'imgPath', 'isLoggedIn']),
     },
     methods:{
         ...mapActions(['readFile', 'savePdf', 'saveTestFile', 'changeSize', 'alignCenter', ]),
@@ -148,7 +148,7 @@ export default {
             this.$store.commit('setFontWeight', {weight: this.selectWeight[idx], idx})
         },
         saveCustom(){
-            if(this.token == 'logout'){
+            if(!this.isLoggedIn){
                 alert('로그인 후 저장 가능합니다!')
             }else{
                 console.log()

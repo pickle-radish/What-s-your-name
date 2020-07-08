@@ -9,6 +9,20 @@
 <script>
 export default {
     name:'Main',
+    
+    // beforeRouteLeave (to, from, next) {
+    //     // If the form is not dirty or the user confirmed they want to lose unsaved changes,
+    //     // continue to next view
+    //     if (!this.form_dirty || this.confirmLeave()){
+    //     next('/')
+    //     } else {
+    //     // Cancel navigation
+    //     next(false)
+    //     }
+    // },
+
+ 
+    
 
 }
 </script>

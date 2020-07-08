@@ -41,8 +41,7 @@ export default {
         customMenu
     },
     computed: mapGetters(['excelData',]),
-    methods:{
-    },
+    
 }
 </script>
 

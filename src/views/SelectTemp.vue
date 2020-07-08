@@ -88,7 +88,7 @@ export default {
                         imageList.push(doc.data().name)
                         // require(`@/img/${this.imgId}.jpg`)
                     })
-                    console.log(imageList)
+                    // console.log(imageList)
 
                     for(let i=0; i<imageList.length; i++){
                       

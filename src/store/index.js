@@ -4,11 +4,16 @@ import XLSX from 'xlsx'
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
+import cookies from 'vue-cookies';
+
+
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    token: 'logout',
+    // token: 'logout',
+    token: cookies.get('login_token'),
 
     excelData:'',
     
@@ -22,7 +27,9 @@ export default new Vuex.Store({
     
   },
   getters:{
-    token: state => state.token,
+    // token: state => state.token,
+    isLoggedIn : state => !!state.token,
+    
     excelData : state => state.excelData,
     imgPath : state => state.imgPath,
     userImg: state => state.userImg,
