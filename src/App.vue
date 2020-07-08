@@ -44,7 +44,9 @@ export default {
     // window.addEventListener('keydown', this.disableF5)
 
     if(cookies.get('refresh')){
-      router.push('/')
+      if(window.location.pathname !== '/'){
+        router.push('/')
+      }
       cookies.remove('refresh')
     }
   },
