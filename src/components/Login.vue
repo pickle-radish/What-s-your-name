@@ -40,6 +40,7 @@ export default {
                 cookies.set('login_token', token)
                 // The signed-in user info.
                 let user = result.user;
+                cookies.set('email', user.email)
                 // console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
 
                 firebase.firestore().collection('user').where('email', '==', user.email).get()

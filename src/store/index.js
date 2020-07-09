@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import XLSX from 'xlsx'
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import firebase from '@/firebase/init'
 
 import cookies from 'vue-cookies';
 
@@ -104,6 +105,30 @@ export default new Vuex.Store({
         reader.readAsArrayBuffer(file)
       }
     },
+    saveCustom({state}, idx){
+      if(!state.token){
+        alert("로그인 후 저장할 수 있습니다!")
+      }else{
+        firebase.firestore().collection('saveList')
+        .add({
+            // email:user.email
+            email: cookies.get('email'),
+            image : state.imgPath[idx],
+            selectFont : state.selectFont,
+            tags : state.tags,
+            size : {
+              width : state.saveWidth,
+              height : state.saveHeight
+            }
+        })
+        .then(
+          alert("저장 되었습니다")
+        )
+        .catch(err=>{
+            console.log(err)
+        })
+      }
+    },
     async saveTestFile({state}){
       if (state.excelData.length==0) {
         alert("엑셀 파일을 넣어주세요")
@@ -123,10 +148,38 @@ export default new Vuex.Store({
         try{
           const canvas = await html2canvas(printArea)
           const dataURL = canvas.toDataURL();
-          pdf.addImage(dataURL, 'JPEG', 5,5);
-          pdf.addImage(dataURL, 'JPEG', 105,5); 
-          pdf.addImage(dataURL, 'JPEG', 5, 148.5);
-          pdf.addImage(dataURL, 'JPEG', 105,  148.5); 
+
+          let width = 0
+          let height = 0
+
+          for(let i=0; i<10; i++){
+            if(width + state.saveWidth <=200){
+              if(height + state.saveHeight <= 290){
+                pdf.addImage(dataURL, 'JPEG', 5+width, 5+height)
+                width = width + state.saveWidth
+                // height = state.saveHeight
+              }else{
+                height = 0
+              }
+            }else{
+              height = height + state.saveHeight
+              if(height + state.saveHeight <= 287){
+                pdf.addImage(dataURL, 'JPEG', 5, 5+height)
+                width = state.saveWidth
+
+              }else{
+                pdf.addPage()
+                pdf.addImage(dataURL, 'JPEG', 5, 5)
+                width = state.saveWidth
+                height = 0
+              }
+            }
+          }
+          // pdf.addImage(dataURL, 'JPEG', 5,5);
+          // pdf.addImage(dataURL, 'JPEG', 105,5); 
+          // pdf.addImage(dataURL, 'JPEG', 5, 148.5);
+          // pdf.addImage(dataURL, 'JPEG', 105,  148.5); 
+
         } catch(err){
           console.error(err)
         }
@@ -231,7 +284,8 @@ export default new Vuex.Store({
           fr.readAsDataURL(files[0]);
       }
 
-    }
+    },
+
   },
   modules: {
   }

@@ -82,7 +82,7 @@
                         
                         <!-- <v-btn color="#9ACD32" rounded large width="95%" @click="savePdf" style="margin-top:10px">이름표 저장</v-btn> -->
                         
-                        <v-btn color="#3CB371" rounded outlined width="200" @click="saveCustom" class="saveBtn" id="saveCutom">
+                        <v-btn color="#3CB371" rounded outlined width="200" @click="saveCustom($route.params.idx)" class="saveBtn" id="saveCutom">
                             <v-icon left>mdi-content-save</v-icon>Template
                         </v-btn>
                         <v-btn color="#4169E1" rounded outlined width="200" @click="saveTestFile" class="saveBtn">
@@ -150,13 +150,6 @@ export default {
         },
         setFontWeight(idx){
             this.$store.commit('setFontWeight', {weight: this.selectWeight[idx], idx})
-        },
-        saveCustom(){
-            if(!this.isLoggedIn){
-                alert('로그인 후 저장 가능합니다!')
-            }else{
-                console.log()
-            }
         },
     },
 }
