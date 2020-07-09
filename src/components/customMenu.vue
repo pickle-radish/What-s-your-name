@@ -6,8 +6,8 @@
                 <v-row no-gutters >
                     <v-col cols="12">
                         <div style="margin:20px 0; display:flex; justify-content: space-around">
-                            <v-btn :color="btnColor" small rounded @click="alignCenter">가운데정렬</v-btn>
-                            <v-btn :color="btnColor" small rounded @click="$store.commit('addTag')">태그 추가</v-btn>
+                            <v-btn :color="btnColor" small rounded outlined @click="alignCenter">가운데정렬</v-btn>
+                            <v-btn :color="btnColor" small rounded outlined @click="$store.commit('addTag')">태그 추가</v-btn>
                         </div>
                         <div>
                             <v-select :items="fontList" label="글꼴 선택" item-value='id' item-text="name" :value="selectFont" @input="setFont"></v-select>
@@ -74,7 +74,7 @@
                     <v-col cols="12" style="display:flex; justify-content: space-around ">
                         <v-text-field label="가로길이" dense style="padding:3px" v-model="saveWidth" @keypress.enter="changeSize({saveWidth, saveHeight})" autocomplete="off"></v-text-field>
                         <v-text-field label="세로길이" dense style="padding:3px" v-model="saveHeight" @keypress.enter="changeSize({saveWidth, saveHeight})" autocomplete="off"></v-text-field>
-                        <v-btn :color="btnColor" rounded small @click="changeSize({saveWidth, saveHeight})" style="margin-top:5px">변경</v-btn>
+                        <v-btn :color="btnColor" rounded outlined small @click="changeSize({saveWidth, saveHeight})" style="margin-top:5px">변경</v-btn>
                     </v-col>
 
                     <v-col>
@@ -82,11 +82,13 @@
                         
                         <!-- <v-btn color="#9ACD32" rounded large width="95%" @click="savePdf" style="margin-top:10px">이름표 저장</v-btn> -->
                         
-                        <v-btn :color="btnColor" rounded width="200" @click="saveCustom" class="saveBtn" id="saveCutom">이름표 양식 저장</v-btn>
+                        <v-btn color="#3CB371" rounded outlined width="200" @click="saveCustom" class="saveBtn" id="saveCutom">
+                            <v-icon left>mdi-content-save</v-icon>Template
+                        </v-btn>
                         <v-btn color="#4169E1" rounded outlined width="200" @click="saveTestFile" class="saveBtn">
                             <v-icon left>mdi-content-save</v-icon>Test
                         </v-btn>
-                        <v-btn color="#FF7F50" rounded outlined width="200" @click="savePdf" class="saveBtn" style="position:relative">
+                        <v-btn color="#FF7F50" rounded outlined width="200" @click="savePdf" class="saveBtn">
                             <v-icon left>mdi-content-save</v-icon>PDF
                             <!-- <v-text-field color="success" loading disabled style="position: absolute;" v-if="saving"></v-text-field>-->
                             <v-progress-linear :value="saving" rounded color="red lighten-2" style="position: absolute; top: 110%" v-if="saving != 0"></v-progress-linear>
@@ -111,7 +113,7 @@ export default {
             saveWidth:'',
             saveHeight:'',
 
-            btnColor: '#F3F1F6',
+            btnColor: '#708090',
 
             fontList:[
                 {id: 'Nanum Gothic', name: "나눔고딕"},
@@ -134,7 +136,7 @@ export default {
         ...mapGetters(['tags', 'fileName', 'selectFont', 'token', 'imgPath', 'isLoggedIn', 'saving']),
     },
     methods:{
-        ...mapActions(['readFile', 'savePdf', 'saveTestFile', 'changeSize', 'alignCenter', ]),
+        ...mapActions(['readFile', 'savePdf', 'saveTestFile', 'changeSize', 'alignCenter', 'saveCustom']),
         addTag(){
             this.tags.push({name: `태그${this.tags.length+1}`, value:''})
         },
@@ -174,6 +176,7 @@ export default {
     }
     .saveBtn{
         margin-top:10px;
+        position:relative;
     }
     .pdfSave{
         color: white;
