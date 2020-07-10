@@ -15,6 +15,7 @@ export default new Vuex.Store({
   state: {
     // token: 'logout',
     token: cookies.get('login_token'),
+    email: '',
 
     excelData:'',
     
@@ -32,6 +33,7 @@ export default new Vuex.Store({
   getters:{
     // token: state => state.token,
     isLoggedIn : state => !!state.token,
+    email: state => state.email,
     
     excelData : state => state.excelData,
     imgPath : state => state.imgPath,
@@ -45,6 +47,8 @@ export default new Vuex.Store({
   },
   mutations: {
     setToken : (state, data) => state.token = data,
+    setEmail : (state, data) => state.email = data,
+
     setExcelData : (state, data) => state.excelData = data,
 
     addPath : (state, data) => state.imgPath.push(data),

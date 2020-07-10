@@ -8,9 +8,9 @@
                 </router-link>
             </v-toolbar-title>
 
-            <router-link :to="{name:`MyList`}" tag="span">
+            <router-link :to="{name:`MyList`}" tag="span" v-if="isLoggedIn">
                 <div>
-                    <v-btn text class="font-weight-light grey--text">내 목걸이들</v-btn> 
+                    <v-btn text class="font-weight-light grey--text">내 목걸이</v-btn> 
                 </div>
             </router-link>
 
@@ -22,10 +22,16 @@
 
 <script>
 import Login from '@/components/Login.vue'
+import {mapGetters} from 'vuex'
+
+
 export default {
     name:'navBar',
     components:{
         Login,
+    },
+    computed:{
+        ...mapGetters(['isLoggedIn'])
     }
 }
 </script>

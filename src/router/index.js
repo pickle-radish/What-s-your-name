@@ -5,6 +5,8 @@ import SelectTemp from '../views/SelectTemp.vue'
 import Custom from '../views/Custom.vue'
 import MyList from '../views/MyList.vue'
 
+import store from '../store'
+
 Vue.use(VueRouter)
 
   const routes = [
@@ -36,6 +38,20 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, form, next) =>{
+  const authRequiredPages = [
+    'MyList',
+  ]
+  const authRequired = authRequiredPages.includes(to.name)
+  const { isLoggedIn } = store.getters
+
+  if (authRequired && !isLoggedIn){
+    next('/')
+  } else {
+    next()
+  }
 })
 
 export default router

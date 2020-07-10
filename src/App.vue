@@ -16,6 +16,8 @@
 import navBar from '@/components/navBar.vue'
 import cookies from 'vue-cookies'
 import router from '@/router/index'
+import firebase from '@/firebase/init'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'App',
@@ -27,17 +29,7 @@ export default {
   data: () => ({
     //
   }),
-
-  beforeRouteLeave (to, from, next) {
-    // If the form is not dirty or the user confirmed they want to lose unsaved changes,
-    // continue to next view
-    if (!this.form_dirty || this.confirmLeave()){
-      next()
-    } else {
-      // Cancel navigation
-      next(false)
-    }
-  },
+  computed: mapGetters(['email']),
 
   created() {
     window.addEventListener('beforeunload', this.refresh)
@@ -49,6 +41,8 @@ export default {
       }
       cookies.remove('refresh')
     }
+    this.getEmail()
+    
   },
 
   // beforeDestroy() {
@@ -56,6 +50,17 @@ export default {
   // },
 
   methods: {
+    getEmail(){
+      firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+          // User is signed in.
+        this.$store.commit('setEmail', user.email)
+      } else {
+          // No user is signed in.
+        this.$store.commit('setEmail', null)
+      }
+    })
+    },
     disableF5(e) { 
       if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82 && event.shiftKey) {
         e.preventDefault() 
