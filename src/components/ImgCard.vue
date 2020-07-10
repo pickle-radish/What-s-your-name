@@ -48,8 +48,13 @@ export default {
     },
     computed: mapGetters(['imgPath', 'saveWidth', 'saveHeight', 'tags', 'selectFont', 'userImg']),
     methods:{
-        ...mapActions(['alignCenter', 'freePosition', 'moveTag']),
+        ...mapActions(['alignCenter', 'freePosition', 'moveTag', 'changeSize']),
     },
+    created(){
+        if(this.saveWidth != 0 && this.saveHeight != 0){
+            this.changeSize
+        }
+    }
     
 }
 </script>

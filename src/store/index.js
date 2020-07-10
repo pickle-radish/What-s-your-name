@@ -109,21 +109,22 @@ export default new Vuex.Store({
         reader.readAsArrayBuffer(file)
       }
     },
-    saveCustom({state}, idx){
+    saveCustom({state}, data){
       if(!state.token){
         alert("로그인 후 저장할 수 있습니다!")
       }else{
         let user = firebase.auth().currentUser
         firebase.firestore().collection('saveList')
         .add({
-            email: user.email,
-            image : state.imgPath[idx],
-            selectFont : state.selectFont,
-            tags : state.tags,
-            size : {
-              width : state.saveWidth,
-              height : state.saveHeight
-            }
+          title: data.title,
+          email: user.email,
+          image : state.imgPath[data.idx],
+          selectFont : state.selectFont,
+          tags : state.tags,
+          size : {
+            width : state.saveWidth,
+            height : state.saveHeight
+          }
         })
         .then(
           alert("저장 되었습니다")

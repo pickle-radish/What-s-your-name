@@ -81,10 +81,42 @@
                         <v-file-input label="File input" accept=".xlsx" @change="readFile"></v-file-input>
                         
                         <!-- <v-btn color="#9ACD32" rounded large width="95%" @click="savePdf" style="margin-top:10px">이름표 저장</v-btn> -->
-                        
-                        <v-btn color="#3CB371" rounded outlined width="200" @click="saveCustom($route.params.idx)" class="saveBtn" id="saveCutom">
+                        <v-dialog v-model="dialog" persistent max-width="400px">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn 
+                                    color="#3CB371" 
+                                    rounded outlined width="200"
+                                    class="saveBtn"
+                                    id="saveCutom"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    >
+                                    <v-icon left>mdi-content-save</v-icon>Template
+                                </v-btn>
+                            </template>
+                            <v-card>
+                                <v-card-title>
+                                    <span class="headline">저장할 이름을 입력하세요</span>
+                                </v-card-title>
+                                <v-card-text>
+                                    <v-container>
+                                        <v-row>
+                                            <v-col>
+                                                <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="제목" autocomplete="off" v-model="title"></v-text-field>
+                                            </v-col>
+                                        </v-row>
+                                    </v-container>
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+                                    <v-btn color="blue darken-1" text @click="dialog = false, saveCustom({idx:$route.params.idx, title}), title=''">Save</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                        <!--<v-btn color="#3CB371" rounded outlined width="200" @click="saveCustom($route.params.idx, title)" class="saveBtn" id="saveCutom">
                             <v-icon left>mdi-content-save</v-icon>Template
-                        </v-btn>
+                        </v-btn>-->
                         <v-btn color="#4169E1" rounded outlined width="200" @click="saveTestFile" class="saveBtn">
                             <v-icon left>mdi-content-save</v-icon>Test
                         </v-btn>
@@ -110,6 +142,9 @@ export default {
     name: 'customMenu',
     data() {
         return {
+            dialog: false,
+
+            title: '',
             saveWidth:'',
             saveHeight:'',
 

@@ -43,11 +43,13 @@ const router = new VueRouter({
 router.beforeEach((to, form, next) =>{
   const authRequiredPages = [
     'MyList',
+    'SelectTemp',
   ]
   const authRequired = authRequiredPages.includes(to.name)
   const { isLoggedIn } = store.getters
 
   if (authRequired && !isLoggedIn){
+    alert("로그인 후에 이용해주세요!")
     next('/')
   } else {
     next()

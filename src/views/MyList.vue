@@ -5,10 +5,20 @@
 </template>
 
 <script>
+// import firebase from '@/firebase/init'
+
 export default {
     name: 'Login',
+    
+    methods:{
+        getMyList(){
 
+        }
+    },
+    
+    created(){
 
+    }
     
 }
 </script>
