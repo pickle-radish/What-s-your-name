@@ -28,6 +28,8 @@ export default new Vuex.Store({
     tags: [{id: 0, name:'', value:'태그1', top:0, left:0, fontSize:40, fontWeight: 300}],
 
     saving: 0,
+
+    myList:[],
     
   },
   getters:{
@@ -44,6 +46,7 @@ export default new Vuex.Store({
     selectFont: state => state.selectFont,
 
     saving: state=> state.saving,
+    myList : state => state.myList,
   },
   mutations: {
     setToken : (state, data) => state.token = data,
@@ -56,6 +59,8 @@ export default new Vuex.Store({
    
     setSaveWidth : (state, data) => state.saveWidth = parseInt(data),
     setSaveHeight : (state, data) => state.saveHeight = parseInt(data),
+
+    setTags : (state, data) => state.tags = data,
 
     addTag(state){
       if (state.tags.length<5){
@@ -83,7 +88,9 @@ export default new Vuex.Store({
         state.saving = data
       }
     
-    } 
+    },
+
+    setMyList : (state, data) => state.myList.push(data),
     
   },
   actions: {
@@ -249,7 +256,6 @@ export default new Vuex.Store({
     },
     changeSize({commit}, data){
       if(data.saveHeight <= 200 && data.saveWidth <= 200){
-
         commit('setSaveWidth',data.saveWidth)
         commit('setSaveHeight',data.saveHeight)
         const printAreaImg = document.querySelector("#tempImgCard");

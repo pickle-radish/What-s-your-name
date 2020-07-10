@@ -73,7 +73,7 @@ export default {
                 }
                 fr.readAsDataURL(files[0]);
                 // console.log(new Date().getTime())
-                router.push({name:`Custom`, params:{idx:1, custom:true}})
+                router.push({name:`Custom`, params:{custom:true}})
             }else{
                 alert("이미지 업로드에 실패했습니다")
             }
@@ -82,7 +82,7 @@ export default {
         setImagePath(){
             let imageList=[]
             firebase.firestore().collection('templateImage').get()
-            .then(async snapshot => {
+            .then(snapshot => {
                 if(!snapshot.empty){
                     snapshot.forEach( doc => {
                         imageList.push(doc.data().name)

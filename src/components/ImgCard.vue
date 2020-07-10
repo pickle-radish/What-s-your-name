@@ -24,7 +24,7 @@
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags"
-                :style="`font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight} `"
+                :style="`top:${tag.top}; font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}`"
                 >
                 <div :id='tagData.id' >
                     {{tag.value}}
@@ -50,9 +50,9 @@ export default {
     methods:{
         ...mapActions(['alignCenter', 'freePosition', 'moveTag', 'changeSize']),
     },
-    created(){
+    mounted(){
         if(this.saveWidth != 0 && this.saveHeight != 0){
-            this.changeSize
+            this.changeSize({saveWidth:this.saveWidth, saveHeight:this.saveHeight})
         }
     }
     
