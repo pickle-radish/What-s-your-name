@@ -109,10 +109,10 @@ export default new Vuex.Store({
       if(!state.token){
         alert("로그인 후 저장할 수 있습니다!")
       }else{
+        let user = firebase.auth().currentUser
         firebase.firestore().collection('saveList')
         .add({
-            // email:user.email
-            email: cookies.get('email'),
+            email: user.email,
             image : state.imgPath[idx],
             selectFont : state.selectFont,
             tags : state.tags,

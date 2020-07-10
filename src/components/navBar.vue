@@ -7,6 +7,13 @@
                     <span class="font-weight-light">Easy Name Card</span>
                 </router-link>
             </v-toolbar-title>
+
+            <router-link :to="{name:`MyList`}" tag="span">
+                <div>
+                    <v-btn text class="font-weight-light grey--text">내 목걸이들</v-btn> 
+                </div>
+            </router-link>
+
             <Login />
         </v-container>
     </v-toolbar>

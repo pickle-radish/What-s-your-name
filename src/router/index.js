@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Main from '../views/Main.vue'
 import SelectTemp from '../views/SelectTemp.vue'
 import Custom from '../views/Custom.vue'
+import MyList from '../views/MyList.vue'
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,11 @@ Vue.use(VueRouter)
     name: 'Custom',
     component: Custom,
     props: true
+  },
+  {
+    path: '/mylist',
+    name: 'MyList',
+    component: MyList,
   },
 
 ]
