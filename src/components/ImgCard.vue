@@ -20,13 +20,13 @@
             <img :src="imgPath[$route.params.idx]" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`" v-if="!$route.params.custom">
             <img :src="userImg" alt="customImg" width="500" class="imageCard" :id="`tempImgCard`" v-else>
             <drag-it-dude
-                v-for="tag in tags" 
+                v-for="(tag, idx) in tags" 
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags"
                 :style="`top:${tag.top}; font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}`"
                 >
-                <div :id='tagData.id' >
+                <div :id='tagData.id' @click="clickTag(idx)">
                     {{tag.value}}
                 </div>
             </drag-it-dude>
@@ -49,6 +49,10 @@ export default {
     computed: mapGetters(['imgPath', 'saveWidth', 'saveHeight', 'tags', 'selectFont', 'userImg']),
     methods:{
         ...mapActions(['alignCenter', 'freePosition', 'moveTag', 'changeSize']),
+        clickTag(idx){
+            const element = document.querySelector("#tag"+this.tags[idx].id)
+            element.style.transform = "translate(0)"
+        }
     },
     mounted(){
         if(this.saveWidth != 0 && this.saveHeight != 0){

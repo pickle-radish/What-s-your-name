@@ -187,6 +187,14 @@ export default {
             this.$store.commit('setFontWeight', {weight: this.selectWeight[idx], idx})
         },
     },
+    watch:{
+        saveWidth:(val,old)=>{
+            if(val > 250){
+                alert("글씨 크기는 250까지 입력 가능합니다")
+                this.saveWidth=old
+            }
+        },
+    }
 }
 </script>
 

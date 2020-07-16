@@ -14,7 +14,7 @@
                 <v-list-item-title>
                     {{ item.title }}
                 </v-list-item-title>
-                <v-btn class="mx-2" fab dark x-small text right color="error" @click="removeTag(idx)">
+                <v-btn class="mx-2" fab dark x-small text right color="error" @click="removeItem(idx)">
                     <v-icon>mdi-close-circle-outline</v-icon>
                 </v-btn>
             </v-list-item>
@@ -27,41 +27,45 @@
 import firebase from '@/firebase/init'
 import {mapGetters, mapMutations} from 'vuex'
 import router from '@/router/index'
+import cookies from 'vue-cookies'
 
 export default {
     name: 'Login',
     data(){
         return{
-            myList:[],
+            // myList: JSON.parse(cookies.get('myList')),
         }
     },
-    computed: mapGetters(['email']),
+    computed: mapGetters(['email', 'myList']),
     methods:{
         ...mapMutations(['setTags', 'setFont', 'setUserImg', 'setSaveWidth', 'setSaveHeight']),
         getMyList(){
-            if(this.myList){
-                firebase.firestore().collection('saveList').where('email', '==', this.email).get()
-                .then(snapshot => {
-                    if(!snapshot.empty){
-                        snapshot.forEach( doc => {
-                            console.log(doc.data())
-                            // this.$store.commit('setMyList', doc.data())
-                            this.myList.push(doc.data())
-                        })
+            this.$store.commit('resetMyList')
+            firebase.firestore().collection('saveList').where('email', '==', this.email).get()
+            .then(snapshot => {
+                if(!snapshot.empty){
+                    snapshot.forEach( doc => {
+                        console.log(doc.data())
+                        // this.$store.commit('setMyList', doc.data())
+                        // this.myList.push(doc.data())
+                        this.$store.commit('setMyList', doc.data())
+                        cookies.set('myList', JSON.stringify(this.myList))
+                    })
 
-                        // for(let i=0; i<imageList.length; i++){
-                            
-                            //     // firestorage 에서 이미지 받아오기
-                        //     // let url = await firebase.storage().ref().child(`template/${imageList[i]}`).getDownloadURL()
-                        //     this.$store.commit('addPath', require(`@/img/${imageList[i]}`))
-                        // }
-                    }
-                })
-                .catch(err=>{
-                    console.log("firebase error")
-                    console.log(err)
-                })
-            }
+                    // for(let i=0; i<imageList.length; i++){
+                        
+                        //     // firestorage 에서 이미지 받아오기
+                    //     // let url = await firebase.storage().ref().child(`template/${imageList[i]}`).getDownloadURL()
+                    //     this.$store.commit('addPath', require(`@/img/${imageList[i]}`))
+                    // }
+                    
+                }
+                    
+            })
+            .catch(err=>{
+                console.log("firebase error")
+                console.log(err)
+            })
         },
         selectImage(idx){
             this.setUserImg(this.myList[idx].image)
@@ -70,11 +74,17 @@ export default {
             this.setSaveWidth(this.myList[idx].size.width)
             this.setSaveHeight(this.myList[idx].size.height)
             router.push({name:`Custom`, params:{custom:true}})
+        },
+        removeItem(){
+            
         }
     },
     
     created(){
-        this.getMyList()
+        if(!this.myList){
+            console.log("my List is null")
+            this.getMyList()
+        }
     }
     
 }

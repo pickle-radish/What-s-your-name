@@ -29,7 +29,7 @@ export default new Vuex.Store({
 
     saving: 0,
 
-    myList:[],
+    myList:JSON.parse(cookies.get('myList')),
     
   },
   getters:{
@@ -89,7 +89,7 @@ export default new Vuex.Store({
       }
     
     },
-
+    resetMyList : (state) => state.myList = [],
     setMyList : (state, data) => state.myList.push(data),
     
   },
@@ -116,16 +116,18 @@ export default new Vuex.Store({
         reader.readAsArrayBuffer(file)
       }
     },
-    saveCustom({state}, data){
+    saveCustom({state, commit}, data){
       if(!state.token){
         alert("로그인 후 저장할 수 있습니다!")
       }else{
         let user = firebase.auth().currentUser
+        console.log(data.idx)
+        let image = data.idx ? data.idx : state.userImg
         firebase.firestore().collection('saveList')
         .add({
           title: data.title,
           email: user.email,
-          image : state.imgPath[data.idx],
+          image,
           selectFont : state.selectFont,
           tags : state.tags,
           size : {
@@ -136,6 +138,21 @@ export default new Vuex.Store({
         .then(
           alert("저장 되었습니다")
         )
+        .then(()=>{
+          firebase.firestore().collection('saveList').where('email', '==', state.email).get()
+          .then(snapshot => {
+            if(!snapshot.empty){
+              snapshot.forEach( doc => {
+                commit('setMyList', doc.data())
+                cookies.set('myList', JSON.stringify(state.myList))
+              })
+            }
+          })
+          .catch(err=>{
+            console.log("firebase error")
+            console.log(err)
+          })
+        })
         .catch(err=>{
             console.log(err)
         })

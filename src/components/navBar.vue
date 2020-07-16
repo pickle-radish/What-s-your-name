@@ -9,9 +9,11 @@
             </v-toolbar-title>
 
             
-            <MyList v-if="isLoggedIn"/>
-
-            <Login />
+            <div style="display:flex;">
+                <v-btn text class="font-weight-light grey--text">가이드</v-btn>
+                <MyList v-if="isLoggedIn"/>
+                <Login />
+            </div>
         </v-container>
     </v-toolbar>
 <!-- </div> -->

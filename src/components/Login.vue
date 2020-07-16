@@ -127,6 +127,7 @@ export default {
             .then(()=>{
                 this.$store.commit("setToken", null) 
                 cookies.remove('login_token');
+                cookies.remove('myList');
             })
             // location.pathname ='/'
             if(window.location.pathname !== '/'){
