@@ -8,10 +8,10 @@
             <v-list-item
             v-for="(item, idx) in myList"
             :key="idx"
-            @click="selectImage(idx)"
             style="padding-right: 0"
+            id="myListItem"
             >
-                <v-list-item-title>
+                <v-list-item-title @click="selectImage(idx)">
                     {{ item.title }}
                 </v-list-item-title>
                 <v-btn class="mx-2" fab dark x-small text right color="error" @click="removeItem(idx)">
@@ -25,7 +25,7 @@
 
 <script>
 import firebase from '@/firebase/init'
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapMutations, mapActions} from 'vuex'
 import router from '@/router/index'
 import cookies from 'vue-cookies'
 
@@ -38,9 +38,11 @@ export default {
     },
     computed: mapGetters(['email', 'myList']),
     methods:{
-        ...mapMutations(['setTags', 'setFont', 'setUserImg', 'setSaveWidth', 'setSaveHeight']),
+        ...mapActions(['removeItem', 'changeSize']),
+        ...mapMutations(['setTags', 'setFont', 'setUserImg', 'setSaveWidth', 'setSaveHeight',]),
         getMyList(){
             this.$store.commit('resetMyList')
+            cookies.remove('myList')
             firebase.firestore().collection('saveList').where('email', '==', this.email).get()
             .then(snapshot => {
                 if(!snapshot.empty){
@@ -73,7 +75,11 @@ export default {
             this.setFont(this.myList[idx].selectFont)
             this.setSaveWidth(this.myList[idx].size.width)
             this.setSaveHeight(this.myList[idx].size.height)
-            router.push({name:`Custom`, params:{custom:true}})
+            if(router.currentRoute.name !== 'Custom'){
+                router.push({name:`Custom`, params:{custom:true}})
+            }else{
+                this.changeSize({saveWidth:this.myList[idx].size.width, saveHeight:this.myList[idx].size.height})
+            }
         },
         removeItem(){
             
@@ -91,5 +97,7 @@ export default {
 </script>
 
 <style>
-
+    #myListItem:hover{
+        cursor: pointer;
+    }
 </style>

@@ -120,43 +120,131 @@ export default new Vuex.Store({
       if(!state.token){
         alert("로그인 후 저장할 수 있습니다!")
       }else{
-        let user = firebase.auth().currentUser
-        console.log(data.idx)
-        let image = data.idx ? data.idx : state.userImg
-        firebase.firestore().collection('saveList')
-        .add({
-          title: data.title,
-          email: user.email,
-          image,
-          selectFont : state.selectFont,
-          tags : state.tags,
-          size : {
-            width : state.saveWidth,
-            height : state.saveHeight
+        let stored = false
+        for(let item of state.myList){
+          if(item.title === data.title){
+            stored = true
+            break
           }
-        })
-        .then(
-          alert("저장 되었습니다")
-        )
-        .then(()=>{
+        }
+        let image = data.idx ? state.imgPath[data.idx] : state.userImg 
+        if(stored){
           firebase.firestore().collection('saveList').where('email', '==', state.email).get()
           .then(snapshot => {
             if(!snapshot.empty){
               snapshot.forEach( doc => {
-                commit('setMyList', doc.data())
-                cookies.set('myList', JSON.stringify(state.myList))
+                if(doc.data().title == data.title){
+                  firebase.firestore().collection('saveList').doc(doc.id)
+                  .update({
+                    image,
+                    selectFont : state.selectFont,
+                    tags : state.tags,
+                    size : {
+                      width : state.saveWidth,
+                      height : state.saveHeight
+                    }
+                  })
+                }
               })
             }
+          })
+          .then(
+            alert("저장 되었습니다")
+          )
+          .then(()=>{
+            cookies.remove('myList')
+            commit('resetMyList')
+            firebase.firestore().collection('saveList').where('email', '==', state.email).get()
+            .then(snapshot => {
+              if(!snapshot.empty){
+                snapshot.forEach( doc => {
+                  commit('setMyList', doc.data())
+                  cookies.set('myList', JSON.stringify(state.myList))
+                })
+              }
+            })
+            .catch(err=>{
+              console.log("firebase error")
+              console.log(err)
+            })
           })
           .catch(err=>{
             console.log("firebase error")
             console.log(err)
           })
+        }else{
+          firebase.firestore().collection('saveList')
+          .add({
+            title: data.title,
+            email: state.email,
+            image,
+            selectFont : state.selectFont,
+            tags : state.tags,
+            size : {
+              width : state.saveWidth,
+              height : state.saveHeight
+            }
+          })
+          .then(
+            alert("저장 되었습니다")
+          )
+          .then(()=>{
+            cookies.remove('myList')
+            commit('resetMyList')
+            firebase.firestore().collection('saveList').where('email', '==', state.email).get()
+            .then(snapshot => {
+              if(!snapshot.empty){
+                snapshot.forEach( doc => {
+                  commit('setMyList', doc.data())
+                  cookies.set('myList', JSON.stringify(state.myList))
+                })
+              }
+            })
+            .catch(err=>{
+              console.log("firebase error")
+              console.log(err)
+            })
+          })
+          .catch(err=>{
+              console.log(err)
+          })
+        }
+      }
+    },
+    removeItem({state, commit}, idx){
+      console.log("removeItem")
+      firebase.firestore().collection('saveList').where('email', '==', state.email).get()
+      .then(snapshot => {
+        if(!snapshot.empty){
+          snapshot.forEach( doc => {
+            if(doc.data().title == state.myList[idx].title){
+              firebase.firestore().collection('saveList').doc(doc.id).delete()
+            }
+          })
+        }
+      }).then(
+        alert("삭제 되었습니다")
+      )
+      .then(()=>{
+        cookies.remove('myList')
+        commit('resetMyList')
+        firebase.firestore().collection('saveList').where('email', '==', state.email).get()
+        .then(snapshot => {
+          if(!snapshot.empty){
+            snapshot.forEach( doc => {
+              commit('setMyList', doc.data())
+              cookies.set('myList', JSON.stringify(state.myList))
+            })
+          }
         })
         .catch(err=>{
-            console.log(err)
+          console.log("firebase error")
+          console.log(err)
         })
-      }
+      })
+      .catch(err=>{
+          console.log(err)
+      })
     },
     async saveTestFile({state}){
       if (state.excelData.length==0) {
