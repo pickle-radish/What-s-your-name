@@ -116,7 +116,7 @@ export default new Vuex.Store({
         reader.readAsArrayBuffer(file)
       }
     },
-    saveCustom({state, commit}, data){
+    saveCustom({state, dispatch}, data){
       if(!state.token){
         alert("로그인 후 저장할 수 있습니다!")
       }else{
@@ -152,21 +152,7 @@ export default new Vuex.Store({
             alert("저장 되었습니다")
           )
           .then(()=>{
-            cookies.remove('myList')
-            commit('resetMyList')
-            firebase.firestore().collection('saveList').where('email', '==', state.email).get()
-            .then(snapshot => {
-              if(!snapshot.empty){
-                snapshot.forEach( doc => {
-                  commit('setMyList', doc.data())
-                  cookies.set('myList', JSON.stringify(state.myList))
-                })
-              }
-            })
-            .catch(err=>{
-              console.log("firebase error")
-              console.log(err)
-            })
+            dispatch('getMyList')
           })
           .catch(err=>{
             console.log("firebase error")
@@ -189,21 +175,7 @@ export default new Vuex.Store({
             alert("저장 되었습니다")
           )
           .then(()=>{
-            cookies.remove('myList')
-            commit('resetMyList')
-            firebase.firestore().collection('saveList').where('email', '==', state.email).get()
-            .then(snapshot => {
-              if(!snapshot.empty){
-                snapshot.forEach( doc => {
-                  commit('setMyList', doc.data())
-                  cookies.set('myList', JSON.stringify(state.myList))
-                })
-              }
-            })
-            .catch(err=>{
-              console.log("firebase error")
-              console.log(err)
-            })
+            dispatch('getMyList')
           })
           .catch(err=>{
               console.log(err)
@@ -211,8 +183,7 @@ export default new Vuex.Store({
         }
       }
     },
-    removeItem({state, commit}, idx){
-      console.log("removeItem")
+    removeItem({state, dispatch}, idx){
       firebase.firestore().collection('saveList').where('email', '==', state.email).get()
       .then(snapshot => {
         if(!snapshot.empty){
@@ -226,24 +197,42 @@ export default new Vuex.Store({
         alert("삭제 되었습니다")
       )
       .then(()=>{
-        cookies.remove('myList')
-        commit('resetMyList')
-        firebase.firestore().collection('saveList').where('email', '==', state.email).get()
-        .then(snapshot => {
-          if(!snapshot.empty){
-            snapshot.forEach( doc => {
-              commit('setMyList', doc.data())
-              cookies.set('myList', JSON.stringify(state.myList))
-            })
-          }
-        })
-        .catch(err=>{
-          console.log("firebase error")
-          console.log(err)
-        })
+        // cookies.remove('myList')
+        // commit('resetMyList')
+        // firebase.firestore().collection('saveList').where('email', '==', state.email).get()
+        // .then(snapshot => {
+        //   if(!snapshot.empty){
+        //     snapshot.forEach( doc => {
+        //       commit('setMyList', doc.data())
+        //       cookies.set('myList', JSON.stringify(state.myList))
+        //     })
+        //   }
+        // })
+        // .catch(err=>{
+        //   console.log("firebase error")
+        //   console.log(err)
+        // })
+        dispatch('getMyList')
       })
       .catch(err=>{
           console.log(err)
+      })
+    },
+    getMyList({state, commit}){
+      cookies.remove('myList')
+      commit('resetMyList')
+      firebase.firestore().collection('saveList').where('email', '==', state.email).get()
+      .then(snapshot => {
+        if(!snapshot.empty){
+          snapshot.forEach( doc => {
+            commit('setMyList', doc.data())
+            cookies.set('myList', JSON.stringify(state.myList))
+          })
+        }
+      })
+      .catch(err=>{
+        console.log("firebase error")
+        console.log(err)
       })
     },
     async saveTestFile({state}){

@@ -81,9 +81,6 @@ export default {
                 this.changeSize({saveWidth:this.myList[idx].size.width, saveHeight:this.myList[idx].size.height})
             }
         },
-        removeItem(){
-            
-        }
     },
     
     created(){
