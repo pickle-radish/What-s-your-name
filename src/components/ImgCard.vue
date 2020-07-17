@@ -24,7 +24,7 @@
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags"
-                :style="`top:${tag.top}; font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}`"
+                :style="`top:${tag.top}; left: 50%; transform:translate(-50%); font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}`"
                 >
                 <div :id='tagData.id' @click="clickTag(idx)">
                     {{tag.value}}

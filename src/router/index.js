@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Main from '../views/Main.vue'
 import SelectTemp from '../views/SelectTemp.vue'
 import Custom from '../views/Custom.vue'
+import Guide from '../views/Guide.vue'
 
 import store from '../store'
 
@@ -24,6 +25,11 @@ Vue.use(VueRouter)
     name: 'Custom',
     component: Custom,
     props: true
+  },
+  {
+    path: '/guide',
+    name: 'Guide',
+    component: Guide,
   },
 
 ]
