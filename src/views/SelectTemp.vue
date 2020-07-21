@@ -1,9 +1,9 @@
 <template>
      <v-container>
         
-        <v-row style="margin-top:100px; height:350px">
+        <v-row style="margin-top:100px; height:150px">
         
-            <v-col cols="3">
+            <v-col cols="2">
                 <v-card outlined height="100%" id="addCard">
                     <div id="addDiv">+</div>
                     <input
@@ -15,7 +15,7 @@
                         >
                 </v-card>
             </v-col>
-            <v-col cols="3" v-for="(path, idx) in imgPath" :key="idx">
+            <v-col cols="2" v-for="(path, idx) in imgPath" :key="idx">
                 <router-link :to="{name:`Custom`, params:{idx, custom:false}}">
                     <v-card height="100%">
                         <img class="tempImg" :src="path" width="100%" height="100%" alt="">
