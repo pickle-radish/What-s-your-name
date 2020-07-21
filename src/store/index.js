@@ -25,7 +25,7 @@ export default new Vuex.Store({
     saveWidth:0,
     saveHeight:0,
     selectFont: 'Nanum Gothic',
-    tags: [{id: 0, name:'', value:'태그1', top:0, left:0, fontSize:40, fontWeight: 300}],
+    tags: [{id: 0, name:'', value:'태그1', top:0, left:'50%', transform:true, fontSize:40, fontWeight: 300}],
 
     saving: 0,
 
@@ -64,17 +64,18 @@ export default new Vuex.Store({
 
     addTag(state){
       if (state.tags.length<5){
-        state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, left:0, fontSize:40, fontWeight:300})
+        state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, left:'50%', transform:true,fontSize:40, fontWeight:300})
       }else{
         alert("태그의 개수는 최대 5개 입니다")
       }
     },
     
-    setTagPosition:(state, data) => state.tags[data.i].top = data.top,
-    // setTagPosition(state, data){  
-    //   state.tags[data.idx].top = data.top
-    //   state.tags[data.idx].left = data.left
-    // },
+    // setTagPosition:(state, data) => state.tags[data.i].top = data.top,
+    setTagPosition(state, data){  
+      state.tags[data.idx].top = data.top
+      state.tags[data.idx].left = data.left
+    },
+    setTransform:(state, data) => state.tags[data.idx].transform = data.value,
 
     removeTag : (state, idx) => state.tags.length>1 ? state.tags.splice(idx, 1) : state.tags,
 
@@ -364,14 +365,9 @@ export default new Vuex.Store({
         const element = document.querySelector("#tag"+state.tags[i].id)
         element.style.left = "50%"
         element.style.transform = "translate(-50%)"
+        commit('setTagPosition', {top:element.style.top, left:element.style.left, idx:i})
+        commit('setTransform', {value: true, idx:i})
         
-        commit('setTagPosition', {top:element.style.top, left:element.style.left, i})
-      } 
-    },
-    setTopPosition({state, commit}){
-      for (let i = 0; i < state.tags.length; i++) {
-        const element = document.querySelector("#tag"+state.tags[i].id)
-        commit('setTagPosition', {top:element.style.top, left:element.style.left, i})
       } 
     },
     // moveTag({commit}, idx){

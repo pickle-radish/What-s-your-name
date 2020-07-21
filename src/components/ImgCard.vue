@@ -8,7 +8,20 @@
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags" 
-                :style="`top:${tag.top}; left: 50%; transform:translate(-50%); font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}`"
+                :style="`top:${tag.top}; left: ${tag.left}; transform:translate(-50%); font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}`"
+                v-if="tag.transform"
+                >
+                <div>
+                    {{tagData[tag.name]}}
+                </div>                                     
+            </drag-it-dude>
+            <drag-it-dude
+                v-for="tag in tags" 
+                :key="tag.id" 
+                :id="`tag${tag.id}`" 
+                class="tags" 
+                :style="`top:${tag.top}; left: ${tag.left}; font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}`"
+                v-else
                 >
                 <div>
                     {{tagData[tag.name]}}
@@ -24,9 +37,9 @@
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags"
-                :style="`top:${tag.top}; left: 50%; transform:translate(-50%); font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}`"
+                :style="`top:${tag.top}; left: 0; font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}`"
                 >
-                <div :id='tagData.id' @click="clickTag(idx)" @mouseup="setTopPosition">
+                <div :id='tagData.id' @click="clickTag(idx)" @mouseup="setPosition(idx)">
                     {{tag.value}}
                 </div>
             </drag-it-dude>
@@ -48,10 +61,15 @@ export default {
     },
     computed: mapGetters(['imgPath', 'saveWidth', 'saveHeight', 'tags', 'selectFont', 'userImg']),
     methods:{
-        ...mapActions(['alignCenter', 'freePosition', 'moveTag', 'changeSize', 'setTopPosition']),
+        ...mapActions(['alignCenter', 'freePosition', 'moveTag', 'changeSize',]),
         clickTag(idx){
             const element = document.querySelector("#tag"+this.tags[idx].id)
             element.style.transform = "translate(0)"
+        },
+        setPosition(idx){
+            const element = document.querySelector("#tag"+this.tags[idx].id)
+            this.$store.commit('setTagPosition', {top:element.style.top, left:element.style.left, idx})
+            this.$store.commit('setTransform', {value: false, idx})
         }
     },
     mounted(){
