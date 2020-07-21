@@ -281,10 +281,6 @@ export default new Vuex.Store({
               }
             }
           }
-          // pdf.addImage(dataURL, 'JPEG', 5,5);
-          // pdf.addImage(dataURL, 'JPEG', 105,5); 
-          // pdf.addImage(dataURL, 'JPEG', 5, 148.5);
-          // pdf.addImage(dataURL, 'JPEG', 105,  148.5); 
 
         } catch(err){
           console.error(err)
