@@ -26,7 +26,7 @@
                 class="tags"
                 :style="`top:${tag.top}; left: 50%; transform:translate(-50%); font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}`"
                 >
-                <div :id='tagData.id' @click="clickTag(idx)">
+                <div :id='tagData.id' @click="clickTag(idx)" @mouseup="setTopPosition">
                     {{tag.value}}
                 </div>
             </drag-it-dude>
@@ -48,7 +48,7 @@ export default {
     },
     computed: mapGetters(['imgPath', 'saveWidth', 'saveHeight', 'tags', 'selectFont', 'userImg']),
     methods:{
-        ...mapActions(['alignCenter', 'freePosition', 'moveTag', 'changeSize']),
+        ...mapActions(['alignCenter', 'freePosition', 'moveTag', 'changeSize', 'setTopPosition']),
         clickTag(idx){
             const element = document.querySelector("#tag"+this.tags[idx].id)
             element.style.transform = "translate(0)"

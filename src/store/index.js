@@ -372,6 +372,12 @@ export default new Vuex.Store({
         commit('setTagPosition', {top:element.style.top, left:element.style.left, i})
       } 
     },
+    setTopPosition({state, commit}){
+      for (let i = 0; i < state.tags.length; i++) {
+        const element = document.querySelector("#tag"+state.tags[i].id)
+        commit('setTagPosition', {top:element.style.top, left:element.style.left, i})
+      } 
+    },
     // moveTag({commit}, idx){
     //   const element = document.querySelector("#tag"+this.state.tags[idx].id)
     //   commit('setTagPosition', {top:element.style.top, left:element.style.left, idx})
