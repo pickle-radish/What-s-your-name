@@ -19,8 +19,8 @@
                         justify="center"
                         >
                             <!-- <div class="display-3">{{ slide }} Slide</div> -->
-                            <div style="display:flex; justify-content:center; border:1px solid">
-                                <video class="coverid_video" autoplay loop width="80%" >
+                            <div style="display:flex; justify-content:center; ">
+                                <video class="coverid_video" autoplay loop width="80%" style="box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.2)">
                                     <source :src="require(`@/video/guide${idx}.mp4`)" type="video/mp4">
                                     <!-- <source src="./../video/dungeonVideo.mp4" type="video/mp4"> -->
                                 </video>
