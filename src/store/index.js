@@ -367,7 +367,6 @@ export default new Vuex.Store({
         element.style.transform = "translate(-50%)"
         commit('setTagPosition', {top:element.style.top, left:element.style.left, idx:i})
         commit('setTransform', {value: true, idx:i})
-        
       } 
     },
     // moveTag({commit}, idx){
