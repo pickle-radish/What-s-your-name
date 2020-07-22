@@ -47,7 +47,7 @@ export default {
             .then(snapshot => {
                 if(!snapshot.empty){
                     snapshot.forEach( doc => {
-                        console.log(doc.data())
+                        // console.log(doc.data())
                         // this.$store.commit('setMyList', doc.data())
                         // this.myList.push(doc.data())
                         this.$store.commit('setMyList', doc.data())
@@ -85,7 +85,6 @@ export default {
     
     created(){
         if(!this.myList){
-            console.log("my List is null")
             this.getMyList()
         }
     }
