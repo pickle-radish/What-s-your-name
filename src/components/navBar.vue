@@ -10,7 +10,7 @@
 
             
             <div style="display:flex;">
-                <router-link :to="{name:`Manual`}" tag="span">
+                <router-link :to="{name:`Guide`}" tag="span">
                     <v-btn text class="font-weight-light grey--text">가이드</v-btn>
                 </router-link>
                 <MyList v-if="isLoggedIn"/>

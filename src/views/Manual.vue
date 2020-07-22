@@ -39,7 +39,7 @@
 <script>
 
 export default {
-    name:'Guide',
+    name:'Manual',
     data () {
       return {
         items: [

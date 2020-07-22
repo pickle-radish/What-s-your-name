@@ -4,6 +4,7 @@ import Main from '../views/Main.vue'
 import SelectTemp from '../views/SelectTemp.vue'
 import Custom from '../views/Custom.vue'
 import Manual from '../views/Manual.vue'
+import Guide from '../views/Guide.vue'
 
 import store from '../store'
 
@@ -30,6 +31,11 @@ Vue.use(VueRouter)
     path: '/manual',
     name: 'Manual',
     component: Manual,
+  },
+  {
+    path: '/guide',
+    name: 'Guide',
+    component: Guide,
   },
 
 ]
