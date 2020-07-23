@@ -286,7 +286,7 @@ export default new Vuex.Store({
         } catch(err){
           console.error(err)
         }
-        pdf.save('saved.pdf');
+        pdf.save('이름표.pdf');
       }
     },
     async savePdf({state, commit}) {
@@ -341,7 +341,7 @@ export default new Vuex.Store({
           }
           
         }
-        pdf.save('saved.pdf');
+        pdf.save('이름표.pdf');
         commit('saving', 0)
       }
     },
