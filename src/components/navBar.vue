@@ -13,7 +13,8 @@
                 <router-link :to="{name:`Guide`}" tag="span">
                     <v-btn text class="font-weight-light grey--text">가이드</v-btn>
                 </router-link>
-                <MyList v-if="isLoggedIn"/>
+                <MyList v-if="currentPage === 'Custom'"/>
+                
                 <Login />
             </div>
         </v-container>
@@ -33,9 +34,14 @@ export default {
         Login,
         MyList,
     },
+    data(){
+        return {
+            pageName:'',
+        }
+    },
     computed:{
-        ...mapGetters(['isLoggedIn'])
-    }
+        ...mapGetters(['isLoggedIn','currentPage'])
+    },
 }
 </script>
 

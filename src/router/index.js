@@ -59,6 +59,9 @@ router.beforeEach((to, form, next) =>{
   } else {
     next()
   }
+  
+  store.commit('setPage', to.name)
+  
 })
 
 export default router

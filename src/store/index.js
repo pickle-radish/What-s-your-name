@@ -30,6 +30,8 @@ export default new Vuex.Store({
     saving: 0,
 
     myList:JSON.parse(cookies.get('myList')),
+
+    currentPage:'',
     
   },
   getters:{
@@ -47,6 +49,8 @@ export default new Vuex.Store({
 
     saving: state=> state.saving,
     myList : state => state.myList,
+
+    currentPage: state => state.currentPage,
   },
   mutations: {
     setToken : (state, data) => state.token = data,
@@ -92,6 +96,8 @@ export default new Vuex.Store({
     },
     resetMyList : (state) => state.myList = [],
     setMyList : (state, data) => state.myList.push(data),
+
+    setPage : (state, data) => state.currentPage = data,
     
   },
   actions: {
