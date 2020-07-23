@@ -70,7 +70,7 @@ export default {
             })
         },
         selectImage(idx){
-            this.setUserImg(this.myList[idx].image)
+            // this.setUserImg(this.myList[idx].image)
             this.setTags(this.myList[idx].tags)
             this.setFont(this.myList[idx].selectFont)
             this.setSaveWidth(this.myList[idx].size.width)
