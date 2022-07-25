@@ -266,4 +266,18 @@ export default {
     .pdfSave{
         color: white;
     }
+
+    #list-item-79-0{font-family: "Nanum Gothic";}
+    #list-item-79-1{font-family: "Gothic A1";}
+    #list-item-79-2{font-family: "Black Han Sans";}
+    #list-item-79-3{font-family: "Nanum Gothic Coding";}
+    #list-item-79-4{font-family: "Nanum Myeongjo";}
+    #list-item-79-5{font-family: "Song Myung";}
+    #list-item-79-6{font-family: "Gamja Flower";}
+    #list-item-79-7{font-family: "Gaegu";}
+    #list-item-79-8{font-family: "Gugi";}
+    #list-item-79-9{font-family: "Cute Font";}
+    #list-item-79-10{font-family: "Do Hyeon";}
+    #list-item-79-11{font-family: "Single Day";}
+
 </style>
