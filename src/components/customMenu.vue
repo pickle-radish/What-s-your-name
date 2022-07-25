@@ -25,7 +25,7 @@
                                             <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="font" type="number" v-model="tag.fontSize" autocomplete="off"></v-text-field>
                                         </v-col> -->
                                         <v-col cols="9">
-                                            <div style="display:flex; justify-content: space-around">
+                                            <!-- <div style="display:flex; justify-content: space-around">
                                                 <v-text-field
                                                     class="pa-0 "
                                                     hide-details
@@ -57,10 +57,82 @@
                                                 >
                                                 </v-select>
 
-                                            </div>
+                                            </div> -->
+
+                                            <v-dialog v-model="tagSetting[idx]" persistent max-width="400px">
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-btn 
+                                                        color="#4682B4" 
+                                                        rounded
+                                                        outlined
+                                                        width="130"
+                                                        class="tag-setting"
+                                                        :id="'tagSetting'+idx"
+                                                        v-bind="attrs"
+                                                        v-on="on"
+                                                        >
+                                                        <v-icon left>mdi-wrench</v-icon>태그 설정
+                                                    </v-btn>
+                                                </template>
+                                                <v-card>
+                                                    <v-card-title>
+                                                        <span class="headline">태그 설정</span>
+                                                    </v-card-title>
+                                                    <v-card-text>
+                                                        <v-container>
+                                                            <v-row>
+                                                                <v-col>
+                                                                    <v-text-field
+                                                                        class="pa-0 "
+                                                                        hide-details
+                                                                        dense
+                                                                        style="padding:0px"
+                                                                        label="tag"
+                                                                        v-model="tag.name"
+                                                                        autocomplete="off"
+                                                                    >
+                                                                    </v-text-field>
+                                                                </v-col>
+                                                            </v-row>
+                                                            <v-row>
+                                                                <v-col>
+                                                                    <v-text-field
+                                                                        class="pa-0 "
+                                                                        hide-details
+                                                                        dense
+                                                                        style="padding:0px"
+                                                                        label="크기"
+                                                                        type="number"
+                                                                        v-model="tag.fontSize"
+                                                                        autocomplete="off"
+                                                                    >
+                                                                    </v-text-field>
+                                                                </v-col>
+                                                                <v-col>
+                                                                    <v-select 
+                                                                        hide_details
+                                                                        dense 
+                                                                        :items="weightList"
+                                                                        label="굵기"
+                                                                        v-model="selectWeight[idx]"
+                                                                        @input="setFontWeight(idx)"
+                                                                    >
+                                                                    </v-select>
+                                                                </v-col>
+                                                            </v-row>
+                                                        </v-container>
+                                                    </v-card-text>
+                                                    <v-card-actions>
+                                                        <v-spacer></v-spacer>
+                                                        <v-btn color="blue darken-1" text @click="closeSettingModal(idx)">Close</v-btn>
+                                                    </v-card-actions>
+                                                </v-card>
+                                            </v-dialog>
                                             <v-text-field class="pa-0" hide-details dense  style="padding:0px" label="value" v-model="tag.value" autocomplete="off"></v-text-field>
                                                
                                         </v-col>
+                                        
+
                                         <v-col style="display:flex; align-items: center; justify-content: flex-end;">
                                             <v-btn class="mx-2" fab dark x-small outlined color="error" @click="removeTag(idx)">
                                                 <v-icon >mdi-minus</v-icon>
@@ -150,6 +222,14 @@ export default {
         return {
             dialog: false,
 
+            tagSetting: [
+                false,
+                false,
+                false,
+                false,
+                false,
+            ],
+
             title: '',
             saveWidth:'',
             saveHeight:'',
@@ -235,6 +315,10 @@ export default {
             this.changeSize({saveWidth: this.saveWidth, saveHeight: this.saveHeight});
         },
 
+        closeSettingModal(idx) {
+            this.$set(this.tagSetting, idx, false);
+        }
+
     },
     watch:{
         // saveWidth:(val,old)=>{
@@ -243,6 +327,15 @@ export default {
         //         this.saveWidth=old
         //     }
         // },
+        tagSetting:(val,old)=> {
+            console.log(old);
+            console.log(val);
+        },
+
+        dialog:(val, old) => {
+            console.log(old);
+            console.log(val);
+        }
     }
 }
 </script>
@@ -265,6 +358,11 @@ export default {
     }
     .pdfSave{
         color: white;
+    }
+
+    .tag-setting {
+        margin-bottom: 10px;
+        height: 28px!important;
     }
 
     #list-item-79-0{font-family: "Nanum Gothic";}
