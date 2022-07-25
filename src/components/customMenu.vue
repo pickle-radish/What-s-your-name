@@ -71,6 +71,11 @@
                         </div>
                         
                     </v-col>
+                    <v-col cols="12" style="margin-bottom: 10px;">
+                        <v-btn class="mx-1" :color="btnColor" fab outlined small @click="setChangeSize('vh2')"><v-icon>mdi-border-inside</v-icon></v-btn>
+                        <v-btn class="mx-1" :color="btnColor" fab outlined small @click="setChangeSize('h2')"><v-icon>mdi-border-horizontal</v-icon></v-btn>
+                        <v-btn class="mx-1" :color="btnColor" fab outlined small @click="setChangeSize('v2')"><v-icon>mdi-border-vertical</v-icon></v-btn>
+                    </v-col>
                     <v-col cols="12" style="display:flex; justify-content: space-around ">
                         <v-text-field label="가로길이" dense style="padding:3px" v-model="saveWidth" @keypress.enter="changeSize({saveWidth, saveHeight})" autocomplete="off"></v-text-field>
                         <v-text-field label="세로길이" dense style="padding:3px" v-model="saveHeight" @keypress.enter="changeSize({saveWidth, saveHeight})" autocomplete="off"></v-text-field>
@@ -79,7 +84,8 @@
 
                     <v-col>
                         <v-file-input label="File input" accept=".xlsx" @change="readFile"></v-file-input>
-                        
+                        <v-btn v-if="paper" :color="btnColor" width="200" rounded outlined @click="changePaper" >출력용지 가로<b style="color: red">세로</b> 변경</v-btn>
+                        <v-btn v-else :color="btnColor" width="200" rounded outlined @click="changePaper" >출력용지 <b style="color: red">가로</b>세로 변경</v-btn>
                         <!-- <v-btn color="#9ACD32" rounded large width="95%" @click="savePdf" style="margin-top:10px">이름표 저장</v-btn> -->
                         <v-dialog v-model="dialog" persistent max-width="400px">
                             <template v-slot:activator="{ on, attrs }">
@@ -169,10 +175,10 @@ export default {
         }
     },
     computed:{
-        ...mapGetters(['tags', 'fileName', 'selectFont', 'token', 'imgPath', 'isLoggedIn', 'saving']),
+        ...mapGetters(['tags', 'fileName', 'selectFont', 'token', 'imgPath', 'isLoggedIn', 'saving', 'paper']),
     },
     methods:{
-        ...mapActions(['readFile', 'savePdf', 'saveTestFile', 'changeSize', 'alignCenter', 'saveCustom']),
+        ...mapActions(['readFile', 'savePdf', 'saveTestFile', 'changeSize', 'alignCenter', 'saveCustom', 'changePaper']),
         addTag(){
             this.tags.push({name: `태그${this.tags.length+1}`, value:''})
         },
@@ -187,14 +193,56 @@ export default {
         setFontWeight(idx){
             this.$store.commit('setFontWeight', {weight: this.selectWeight[idx], idx})
         },
+        setChangeSize(type) {
+            console.log(this.paper);
+            console.log(type);
+            if(this.paper) {
+                switch(type) {
+                    case 'vh2':
+                        this.saveWidth = 100;
+                        this.saveHeight = 143;
+                        break;
+                    case 'v2':
+                        this.saveWidth = 100;
+                        this.saveHeight = 287;
+                        break;
+                    case 'h2':
+                        this.saveWidth = 200;
+                        this.saveHeight = 143;
+                        break;
+                }
+            } else {
+                switch(type) {
+                    case 'vh2':
+                        this.saveWidth = 143;
+                        this.saveHeight = 100;
+                        break;
+                    case 'v2':
+                        this.saveWidth = 143;
+                        this.saveHeight = 200;
+                        break;
+                    case 'h2':
+                        this.saveWidth = 287;
+                        this.saveHeight = 100;
+                        break;
+                }
+
+            }
+
+            console.log(this.saveWidth);
+            console.log(this.saveHeight);
+
+            this.changeSize({saveWidth: this.saveWidth, saveHeight: this.saveHeight});
+        },
+
     },
     watch:{
-        saveWidth:(val,old)=>{
-            if(val > 250){
-                alert("글씨 크기는 250까지 입력 가능합니다")
-                this.saveWidth=old
-            }
-        },
+        // saveWidth:(val,old)=>{
+        //     if(val > 250){
+        //         alert("글씨 크기는 250까지 입력 가능합니다")
+        //         this.saveWidth=old
+        //     }
+        // },
     }
 }
 </script>
@@ -204,7 +252,7 @@ export default {
         background-color: rgba(0,0,0,0);
     }
     #tagBox{
-        height:380px;
+        height:350px;
         overflow-y: scroll;
     }
     .inputTags{

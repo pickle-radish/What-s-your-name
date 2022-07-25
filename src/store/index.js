@@ -22,11 +22,16 @@ export default new Vuex.Store({
     imgPath:[],
     userImg:'',
     
+    // true = 세로 , false = 가로
+    paper: true,
+
     saveWidth:0,
     saveHeight:0,
+    
     selectFont: 'Nanum Gothic',
     tags: [{id: 0, name:'', value:'태그1', top:0, left:'50%', transform:true, fontSize:40, fontWeight: 300}],
 
+    //pdf 저장시 진행률
     saving: 0,
 
     myList:JSON.parse(cookies.get('myList')),
@@ -42,6 +47,7 @@ export default new Vuex.Store({
     excelData : state => state.excelData,
     imgPath : state => state.imgPath,
     userImg: state => state.userImg,
+    paper: state => state.paper,
     saveWidth : state => state.saveWidth,
     saveHeight : state => state.saveHeight,
     tags: state => state.tags,
@@ -61,6 +67,8 @@ export default new Vuex.Store({
     addPath : (state, data) => state.imgPath.push(data),
     setUserImg : (state, data) => state.userImg = data,
    
+    setPaper : (state) => state.paper = !state.paper,
+
     setSaveWidth : (state, data) => state.saveWidth = parseInt(data),
     setSaveHeight : (state, data) => state.saveHeight = parseInt(data),
 
@@ -243,12 +251,10 @@ export default new Vuex.Store({
       })
     },
     async saveTestFile({state}){
-      if (state.excelData.length==0) {
-        alert("엑셀 파일을 넣어주세요")
-      }else if(!state.saveWidth || !state.saveHeight){
+      if(!state.saveWidth || !state.saveHeight){
         alert("가로 세로 크기를 입력해 주세요")
       }else{
-        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdf = new jsPDF(state.paper ? 'p' : 'l', 'mm', 'a4');
         // const printArea = document.querySelector("#tempCard");
         // const printAreaImg = document.querySelector("#tempImgCard");
         
@@ -266,27 +272,52 @@ export default new Vuex.Store({
           let height = 0
 
           for(let i=0; i<10; i++){
-            if(width + state.saveWidth <=200){
-              if(height + state.saveHeight <= 290){
-                pdf.addImage(dataURL, 'JPEG', 5+width, 5+height)
-                width = width + state.saveWidth
-                // height = state.saveHeight
+            if(state.paper) {
+              if(width + state.saveWidth <=200){
+                if(height + state.saveHeight <= 290){
+                  pdf.addImage(dataURL, 'JPEG', 5+width, 5+height)
+                  width = width + state.saveWidth
+                  // height = state.saveHeight
+                }else{
+                  height = 0
+                }
               }else{
-                height = 0
+                height = height + state.saveHeight
+                if(height + state.saveHeight <= 287){
+                  pdf.addImage(dataURL, 'JPEG', 5, 5+height)
+                  width = state.saveWidth
+  
+                }else{
+                  pdf.addPage()
+                  pdf.addImage(dataURL, 'JPEG', 5, 5)
+                  width = state.saveWidth
+                  height = 0
+                }
               }
-            }else{
-              height = height + state.saveHeight
-              if(height + state.saveHeight <= 287){
-                pdf.addImage(dataURL, 'JPEG', 5, 5+height)
-                width = state.saveWidth
-
+            } else {
+              if(width + state.saveWidth <=290){
+                if(height + state.saveHeight <= 200){
+                  pdf.addImage(dataURL, 'JPEG', 5+width, 5+height)
+                  width = width + state.saveWidth
+                  // height = state.saveHeight
+                }else{
+                  height = 0
+                }
               }else{
-                pdf.addPage()
-                pdf.addImage(dataURL, 'JPEG', 5, 5)
-                width = state.saveWidth
-                height = 0
+                height = height + state.saveHeight
+                if(height + state.saveHeight <= 200){
+                  pdf.addImage(dataURL, 'JPEG', 5, 5+height)
+                  width = state.saveWidth
+  
+                }else{
+                  pdf.addPage()
+                  pdf.addImage(dataURL, 'JPEG', 5, 5)
+                  width = state.saveWidth
+                  height = 0
+                }
               }
             }
+            
           }
 
         } catch(err){
@@ -304,7 +335,7 @@ export default new Vuex.Store({
         let width = 0
         let height = 0
 
-        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdf = new jsPDF(state.paper ? 'p' : 'l', 'mm', 'a4');
         
         for(let i=0; i<state.excelData.length; i++){
           const printArea = document.querySelector("#card"+i.toString());
@@ -320,27 +351,52 @@ export default new Vuex.Store({
 
             const dataURL = canvas.toDataURL();
 
-            if(width + state.saveWidth <=200){
-              if(height + state.saveHeight <= 290){
-                pdf.addImage(dataURL, 'JPEG', 5+width, 5+height)
-                width = width + state.saveWidth
-                // height = state.saveHeight
+            if(state.paper) {
+              if(width + state.saveWidth <=200){
+                if(height + state.saveHeight <= 290){
+                  pdf.addImage(dataURL, 'JPEG', 5+width, 5+height)
+                  width = width + state.saveWidth
+                  // height = state.saveHeight
+                }else{
+                  height = 0
+                }
               }else{
-                height = 0
+                height = height + state.saveHeight
+                if(height + state.saveHeight <= 287){
+                  pdf.addImage(dataURL, 'JPEG', 5, 5+height)
+                  width = state.saveWidth
+  
+                }else{
+                  pdf.addPage()
+                  pdf.addImage(dataURL, 'JPEG', 5, 5)
+                  width = state.saveWidth
+                  height = 0
+                }
               }
-            }else{
-              height = height + state.saveHeight
-              if(height + state.saveHeight <= 287){
-                pdf.addImage(dataURL, 'JPEG', 5, 5+height)
-                width = state.saveWidth
-
+            } else {
+              if(width + state.saveWidth <=290){
+                if(height + state.saveHeight <= 200){
+                  pdf.addImage(dataURL, 'JPEG', 5+width, 5+height)
+                  width = width + state.saveWidth
+                  // height = state.saveHeight
+                }else{
+                  height = 0
+                }
               }else{
-                pdf.addPage()
-                pdf.addImage(dataURL, 'JPEG', 5, 5)
-                width = state.saveWidth
-                height = 0
+                height = height + state.saveHeight
+                if(height + state.saveHeight <= 200){
+                  pdf.addImage(dataURL, 'JPEG', 5, 5+height)
+                  width = state.saveWidth
+  
+                }else{
+                  pdf.addPage()
+                  pdf.addImage(dataURL, 'JPEG', 5, 5)
+                  width = state.saveWidth
+                  height = 0
+                }
               }
             }
+
             commit('saving', (state.saving + (100 /state.excelData.length )))
           }catch (err) {
             console.error(err)
@@ -351,8 +407,8 @@ export default new Vuex.Store({
         commit('saving', 0)
       }
     },
-    changeSize({commit}, data){
-      if(data.saveHeight <= 200 && data.saveWidth <= 200){
+    changeSize({state, commit}, data){
+      if(data.saveHeight <= state.paper ? 287 : 200 && data.saveWidth <= state.paper ? 200 : 287){
         commit('setSaveWidth',data.saveWidth)
         commit('setSaveHeight',data.saveHeight)
         const printAreaImg = document.querySelector("#tempImgCard");
@@ -361,7 +417,7 @@ export default new Vuex.Store({
         printAreaImg.style.height= `${3.77 * data.saveHeight}px`
         
       }else{
-        alert("가로세로는 최대 200(mm)까지 입력이 가능합니다")
+        alert("용지보다 큰 사이즈는 입력할 수 없습니다")
       }
       // dispatch('alignCenter')
 
@@ -392,6 +448,11 @@ export default new Vuex.Store({
           fr.readAsDataURL(files[0]);
       }
 
+    },
+
+    changePaper({state, commit}) {
+      commit('setPaper');
+      alert((state.paper ? '세로' : '가로') + '로 변경되었습니다');
     },
 
   },
