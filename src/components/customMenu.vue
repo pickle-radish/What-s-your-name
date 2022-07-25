@@ -161,7 +161,8 @@ export default {
                 {id: 'Gaegu', name: "개구쟁이"},
                 {id: 'Gugi', name: "구기"},
                 {id: 'Cute Font', name: "귀여운 폰트"},
-                {id: 'Do Hyeon', name: '도현'}
+                {id: 'Do Hyeon', name: '도현'},
+                {id: 'Single Day', name: '단 하루'}
             ],
             weightList: [100, 200, 300, 400, 500, 600, 700, 800, 900],
             selectWeight:[300,300,300,300,300]
