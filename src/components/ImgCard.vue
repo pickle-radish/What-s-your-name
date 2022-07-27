@@ -8,24 +8,24 @@
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags" 
-                :style="`top:${tag.top}; left: ${tag.left}; transform:translate(-50%); font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}; color: ${tag.fontColor}`"
+                :style="`top:${tag.top}; left: ${tag.left}; transform:translate(-50%); font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}; color: ${tag.fontColor};`"
                 v-if="tag.transform"
                 >
-                <div>
+                <span :style="`box-shadow: ${tag.shadowCol}px ${tag.shadowRow}px ${tag.shadowBlur}px ${tag.shadowColor}`">
                     {{tagData[tag.name]}}
-                </div>                                     
+                </span>                                     
             </drag-it-dude>
             <drag-it-dude
                 v-for="tag in tags" 
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags" 
-                :style="`top:${tag.top}; left: ${tag.left}; font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}; color: ${tag.fontColor}`"
+                :style="`top:${tag.top}; left: ${tag.left}; font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}; color: ${tag.fontColor};`"
                 v-else
                 >
-                <div>
+                <span :style="``">
                     {{tagData[tag.name]}}
-                </div>                                     
+                </span>                                     
             </drag-it-dude>
         </div>
 
@@ -37,11 +37,11 @@
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags"
-                :style="`top:${tag.top}; left: 0; font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}; color: ${tag.fontColor}`"
+                :style="`top:${tag.top}; left: 0; font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}; color: ${tag.fontColor};`"
                 >
-                <div :id='tagData.id' @click="clickTag(idx)" @mouseup="setPosition(idx)">
+                <span :id='tagData.id' @click="clickTag(idx)" @mouseup="setPosition(idx)" :style="`text-shadow: ${tag.shadowCol}px ${tag.shadowRow}px ${tag.shadowBlur}px ${tag.shadowColor}`">
                     {{tag.value}}
-                </div>
+                </span>
             </drag-it-dude>
         </div>
     </div>

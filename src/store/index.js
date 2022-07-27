@@ -29,7 +29,7 @@ export default new Vuex.Store({
     saveHeight:0,
     
     selectFont: 'Nanum Gothic',
-    tags: [{id: 0, name:'', value:'태그1', top:0, left:'50%', transform:true, fontSize:40, fontWeight: 300, fontColor: '#000000'}],
+    tags: [{id: 0, name:'', value:'태그1', top:0, left:'50%', transform:true, fontSize:40, fontWeight: 300, fontColor: '#000000FF', shadowCol:0, shadowRow:0, shadowBlur:0, shadowColor: '#000000FF'}],
 
     //pdf 저장시 진행률
     saving: 0,
@@ -76,7 +76,7 @@ export default new Vuex.Store({
 
     addTag(state){
       if (state.tags.length<5){
-        state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, left:'50%', transform:true,fontSize:40, fontWeight:300})
+        state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, left:'50%', transform:true, fontSize:40, fontWeight:300})
       }else{
         alert("태그의 개수는 최대 5개 입니다")
       }
@@ -88,6 +88,13 @@ export default new Vuex.Store({
       state.tags[data.idx].left = data.left
     },
     setTransform:(state, data) => state.tags[data.idx].transform = data.value,
+
+    resetShadow(state, idx) {
+      state.tags[idx].shadowCol = 0;
+      state.tags[idx].shadowRow = 0;
+      state.tags[idx].shadowBlur = 0;
+      state.tags[idx].shadowColor = '#000000FF';
+    },
 
     removeTag : (state, idx) => state.tags.length>1 ? state.tags.splice(idx, 1) : state.tags,
 

@@ -118,10 +118,62 @@
                                                         </v-row>
                                                         <v-row>
                                                             <v-col>
+                                                                <div>글자색</div>
                                                                 <v-color-picker
                                                                 v-model="tag.fontColor"
                                                                 flat
                                                                 ></v-color-picker>
+                                                            </v-col>
+                                                        </v-row>
+                                                        <v-row>
+                                                            <v-col>
+                                                                <div>
+                                                                    <span style="margin-right: 10px">글자 그림자</span>
+                                                                    <v-btn x-small color="red lighten-2" @click="$store.commit('resetShadow', idx)">초기화</v-btn>
+                                                                </div>
+                                                                <v-row>
+                                                                    <v-col class="shadow-setting">
+                                                                        <div class='shadow-option-name'>가로 그림자</div>
+                                                                        <v-slider
+                                                                            min="-30"
+                                                                            max="30"
+                                                                            v-model="tag.shadowCol"
+                                                                        ></v-slider>
+                                                                    </v-col>
+                                                                </v-row>
+                                                                <v-row>
+                                                                    <v-col class="shadow-setting">
+                                                                        <div class='shadow-option-name'>세로 그림자</div>
+                                                                        <v-slider
+                                                                            min="-30"
+                                                                            max="30"
+                                                                            v-model="tag.shadowRow"
+                                                                        ></v-slider>
+                                                                        
+                                                                    </v-col>
+                                                                </v-row>
+                                                                <v-row>
+                                                                    <v-col class="shadow-setting">
+                                                                        <div class='shadow-option-name'>그림자 선명도</div>
+                                                                        <v-slider
+                                                                            min="-10"
+                                                                            max="10"
+                                                                            v-model="tag.shadowBlur"
+                                                                        ></v-slider>
+                                                                    </v-col>
+                                                                </v-row>
+                                                                <v-row>
+                                                                    <v-col>
+                                                                        <div class='shadow-option-name' style="margin-top: 15px">그림자 색상</div>
+                                                                        <v-color-picker
+                                                                            class="ma-2"
+                                                                            hide-inputs
+                                                                            hide-mode-switch
+                                                                            v-model="tag.shadowColor"
+                                                                        ></v-color-picker>
+                                                                        <div>{{tag.shadowColor}}</div>
+                                                                    </v-col>
+                                                                </v-row>
                                                             </v-col>
                                                         </v-row>
                                                     </v-container>
@@ -331,7 +383,7 @@ export default {
                 this.$set(this.tagSetting, idx, false);
             });
             this.$set(this.tagSetting, idx, !popup);
-        }
+        },
 
     },
     watch:{
@@ -380,7 +432,16 @@ export default {
         right:-100%;
         top: 0;    
     }
+    
+    .shadow-setting {
+        display:flex;
+        height: 10px;
+    }
 
+    .shadow-option-name {
+        width: 90px;
+        text-align: left;
+    }
 
     #list-item-79-0{font-family: "Nanum Gothic";}
     #list-item-79-1{font-family: "Gothic A1";}
