@@ -8,7 +8,7 @@
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags" 
-                :style="`top:${tag.top}; left: ${tag.left}; transform:translate(-50%); font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}`"
+                :style="`top:${tag.top}; left: ${tag.left}; transform:translate(-50%); font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}; color: ${tag.fontColor}`"
                 v-if="tag.transform"
                 >
                 <div>
@@ -20,7 +20,7 @@
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags" 
-                :style="`top:${tag.top}; left: ${tag.left}; font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}`"
+                :style="`top:${tag.top}; left: ${tag.left}; font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}; color: ${tag.fontColor}`"
                 v-else
                 >
                 <div>
@@ -37,7 +37,7 @@
                 :key="tag.id" 
                 :id="`tag${tag.id}`" 
                 class="tags"
-                :style="`top:${tag.top}; left: 0; font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}`"
+                :style="`top:${tag.top}; left: 0; font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}; color: ${tag.fontColor}`"
                 >
                 <div :id='tagData.id' @click="clickTag(idx)" @mouseup="setPosition(idx)">
                     {{tag.value}}

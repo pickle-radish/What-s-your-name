@@ -29,7 +29,7 @@ export default new Vuex.Store({
     saveHeight:0,
     
     selectFont: 'Nanum Gothic',
-    tags: [{id: 0, name:'', value:'태그1', top:0, left:'50%', transform:true, fontSize:40, fontWeight: 300}],
+    tags: [{id: 0, name:'', value:'태그1', top:0, left:'50%', transform:true, fontSize:40, fontWeight: 300, fontColor: '#000000'}],
 
     //pdf 저장시 진행률
     saving: 0,
