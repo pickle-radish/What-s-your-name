@@ -11,7 +11,7 @@
                 :style="`top:${tag.top}; left: ${tag.left}; transform:translate(-50%); font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}; color: ${tag.fontColor};`"
                 v-if="tag.transform"
                 >
-                <span :style="`box-shadow: ${tag.shadowCol}px ${tag.shadowRow}px ${tag.shadowBlur}px ${tag.shadowColor}`">
+                <span :id='tagData.id' @click="clickTag(idx)" @mouseup="setPosition(idx)" :style="`text-shadow: ${tag.shadowCol}px ${tag.shadowRow}px ${tag.shadowBlur}px ${tag.shadowColor}`">
                     {{tagData[tag.name]}}
                 </span>                                     
             </drag-it-dude>
@@ -23,7 +23,7 @@
                 :style="`top:${tag.top}; left: ${tag.left}; font-size:${tag.fontSize}px; font-family: ${selectFont}; font-weight: ${tag.fontWeight}; color: ${tag.fontColor};`"
                 v-else
                 >
-                <span :style="``">
+                <span :id='tagData.id' @click="clickTag(idx)" @mouseup="setPosition(idx)" :style="`text-shadow: ${tag.shadowCol}px ${tag.shadowRow}px ${tag.shadowBlur}px ${tag.shadowColor}`">
                     {{tagData[tag.name]}}
                 </span>                                     
             </drag-it-dude>
