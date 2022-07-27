@@ -76,7 +76,7 @@ export default new Vuex.Store({
 
     addTag(state){
       if (state.tags.length<5){
-        state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, left:'50%', transform:true, fontSize:40, fontWeight:300})
+        state.tags.push({id: state.tags[state.tags.length-1].id+1 ,name: '', value:`태그${state.tags[state.tags.length-1].id+2}`, top:0, left:'50%', transform:true, fontSize:40, fontWeight:300, fontColor: '#000000FF', shadowCol:0, shadowRow:0, shadowBlur:0, shadowColor: '#000000FF'})
       }else{
         alert("태그의 개수는 최대 5개 입니다")
       }
